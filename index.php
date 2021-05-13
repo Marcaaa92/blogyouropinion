@@ -49,7 +49,7 @@ require_once("db_conn.php");
 				<div class="column is-full-mobile is-full-tablet is-full-third-desktop is-one-third-widescreen is-one-third-fullhd" >
 						<?php
 						echo "<h1 class=\"title is-2\" style='text-align:center'>Standing</h1>";
-							$stmt = $db->prepare("SELECT timestamp,response FROM classifica ORDER BY timestamp DESC LIMIT 1");
+							$stmt = $db->prepare("SELECT timestamp,response FROM standing ORDER BY timestamp DESC LIMIT 1");
 							$stmt->execute([]);
 							$row = $stmt->fetch();
 							if(timeDiff($row["timestamp"])<5){
@@ -58,7 +58,7 @@ require_once("db_conn.php");
 							else{
 								$response_data = request("https://api-football-v1.p.rapidapi.com/v2/leagueTable/2857?timezone=Europe%2FRome");
 								$timestamp= date('Y-m-d H:i:s');
-								$stmt = $db->prepare("INSERT INTO classifica(timestamp,response) VALUES (?,?)");
+								$stmt = $db->prepare("INSERT INTO standing(timestamp,response) VALUES (?,?)");
 								$stmt->execute([$timestamp,json_encode($response_data)]);
 							}
 							echo"<div class='table-container'><table class=\"table\">";
@@ -148,7 +148,7 @@ require_once("db_conn.php");
 				</div>
 				<div class="coulum is-full-mobile is-full-tablet is-full-third-desktop is-one-third-widescreen is-one-third-fullhd">
 					<?php
-					$stmt = $db->prepare("SELECT timestamp,response FROM marcatori ORDER BY timestamp DESC LIMIT 1");
+					$stmt = $db->prepare("SELECT timestamp,response FROM topscorer ORDER BY timestamp DESC LIMIT 1");
 					$stmt->execute([]);
 					$row = $stmt->fetch();
 					if(timeDiff($row["timestamp"])<24){
@@ -157,7 +157,7 @@ require_once("db_conn.php");
 					else{
 						$response_data = request("https://api-football-v1.p.rapidapi.com/v2/topscorers/2857?timezone=Europe%2FRome");
 						$timestamp= date('Y-m-d H:i:s');
-						$stmt = $db->prepare("INSERT INTO marcatori(timestamp,response) VALUES (?,?)");
+						$stmt = $db->prepare("INSERT INTO topscorer(timestamp,response) VALUES (?,?)");
 						$stmt->execute([$timestamp,json_encode($response_data)]);
 					}
 					echo "<h1 class=\"title is-2\" style='text-align:center'>Top scorer</h1>";
