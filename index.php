@@ -115,7 +115,7 @@ require_once("db_conn.php");
 
 								echo"<div class=\"columns is-mobile is-centered\"><div class=\"is-half is-offset-one-quarter\"><table class=\"table\">";
 								$round=preg_replace('/\D/', '', $round);
-								echo"<tr><td colspan='6'><h1 class=\"title is-4\">Turns $round</h1></td></tr>";
+								echo"<tr class='matches'><td colspan='6'><h1 class=\"title is-4\">Turns $round</h1></td></tr>";
 
 							for($i=0; $i<count($response->api->fixtures);$i++){
 									$id=$response->api->fixtures[$i]->fixture_id;
@@ -132,15 +132,15 @@ require_once("db_conn.php");
 									$awayTeamGoal=$response->api->fixtures[$i]->goalsAwayTeam;
 									if($_SESSION["teamId"]==$homeTeamId || $_SESSION["teamId"]==$awayTeamId){
 										if($status=="Match Finished"||$status=="Not Started"||$status=="Time to be defined"||$status=="Match Postponed")
-											echo "<tr  style='background-color:#3273dc; color:white;'><td><img style='width:50px' src='$homeTeamLogo'></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$homeTeamId&action=article' style='color:white;'>$homeTeam</a></h1></td><td>$date<br>$status<br><h1 class=\"title is-5\">$homeTeamGoal-$awayTeamGoal</h1><a href='./match.php?id=$id'>Details</a></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$awayTeamId&action=article' style='color:white;'>$awayTeam</a></h1></td><td><img style='width:50px' src='$awayTeamLogo'></td></tr>";
+											echo "<tr class='matches' style='background-color:#3273dc; color:white;'><td><img style='width:50px' src='$homeTeamLogo'></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$homeTeamId&action=article' style='color:white;'>$homeTeam</a></h1></td><td>$date<br>$status<br><h1 class=\"title is-5\">$homeTeamGoal-$awayTeamGoal</h1><a href='./match.php?id=$id'>Details</a></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$awayTeamId&action=article' style='color:white;'>$awayTeam</a></h1></td><td><img style='width:50px' src='$awayTeamLogo'></td></tr>";
 										else
-											echo "<tr  style='background-color:#3273dc; color:white;'><td><img style='width:50px' src='$homeTeamLogo'></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$homeTeamId&action=article' style='color:white;'>$homeTeam</a></h1></td><td>$date<br><p style='background-color:red'>$status</p>$elapsed<h1 class=\"title is-5\">$homeTeamGoal-$awayTeamGoal</h1><a href='./match.php?id=$id'>Dettagli</a></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$awayTeamId&action=article' style='color:white;'>$awayTeam</a></h1></td><td><img style='width:50px' src='$awayTeamLogo'></td></tr>";
+											echo "<tr class='matches' style='background-color:#3273dc; color:white;'><td><img style='width:50px' src='$homeTeamLogo'></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$homeTeamId&action=article' style='color:white;'>$homeTeam</a></h1></td><td>$date<br><p style='background-color:red'>$status</p>$elapsed<h1 class=\"title is-5\">$homeTeamGoal-$awayTeamGoal</h1><a href='./match.php?id=$id'>Dettagli</a></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$awayTeamId&action=article' style='color:white;'>$awayTeam</a></h1></td><td><img style='width:50px' src='$awayTeamLogo'></td></tr>";
 									}
 									else{
 										if($status=="Match Finished"||$status=="Not Started"||$status=="Time to be defined"||$status=="Match Postponed")
-											echo "<tr><td><img style='width:50px' src='$homeTeamLogo'></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$homeTeamId&action=article'>$homeTeam</a></h1></td><td>$date<br>$status<br><h1 class=\"title is-5\">$homeTeamGoal-$awayTeamGoal</h1><a href='./match.php?id=$id'>Details</a></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$awayTeamId&action=article'>$awayTeam</a></h1></td><td><img style='width:50px' src='$awayTeamLogo'></td></tr>";
+											echo "<tr class='matches'><td><img style='width:50px' src='$homeTeamLogo'></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$homeTeamId&action=article'>$homeTeam</a></h1></td><td>$date<br>$status<br><h1 class=\"title is-5\">$homeTeamGoal-$awayTeamGoal</h1><a href='./match.php?id=$id'>Details</a></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$awayTeamId&action=article'>$awayTeam</a></h1></td><td><img style='width:50px' src='$awayTeamLogo'></td></tr>";
 										else
-											echo "<tr><td><img style='width:50px' src='$homeTeamLogo'></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$homeTeamId&action=article'>$homeTeam</a></h1></td><td>$date<br><p style='background-color:red'>$status</p>$elapsed<h1 class=\"title is-5\">$homeTeamGoal-$awayTeamGoal</h1><a href='./match.php?id=$id'>Dettagli</a></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$awayTeamId&action=article'>$awayTeam</a></h1></td><td><img style='width:50px' src='$awayTeamLogo'></td></tr>";
+											echo "<tr class='matches'><td><img style='width:50px' src='$homeTeamLogo'></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$homeTeamId&action=article'>$homeTeam</a></h1></td><td>$date<br><p style='background-color:red'>$status</p>$elapsed<h1 class=\"title is-5\">$homeTeamGoal-$awayTeamGoal</h1><a href='./match.php?id=$id'>Dettagli</a></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$awayTeamId&action=article'>$awayTeam</a></h1></td><td><img style='width:50px' src='$awayTeamLogo'></td></tr>";
 									}
 								}
 								echo "</table></div></div>";
