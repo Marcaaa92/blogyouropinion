@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   $rowos=array();
   while($row = $stmt->fetch()){
     $rowo=array(
-    "Category name"=>$row["categoryName"],
+    "CategoryName"=>$row["categoryName"],
     "Id"=>$row["id"],
     );
     array_push($rowos,$rowo);
