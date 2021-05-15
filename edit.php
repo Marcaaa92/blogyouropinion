@@ -194,11 +194,11 @@ require_once("db_conn.php");
 						<?php
 							if(isset($_POST["submit"])){
 								if($_POST["submit"]=="editnickname"){
-									$nickname=$_POST["nickname"];
+									$nickname=strip_tags($_POST["nickname"]);
 									$password=hash('sha512',$_POST["password"]);
 									$id=$_SESSION["id"];
 										$stmt = $db->prepare("SELECT nickname FROM user WHERE nickname = ?");
-										$stmt->execute([$nickname]);
+										$stmt->execute([strip_tags($nickname)]);
 										if ($stmt->rowCount() == 0){
 											$stmt = $db->prepare("SELECT email,password FROM user WHERE id = ? AND password = ?");
 											$stmt->execute([$id, $password]);
@@ -259,7 +259,7 @@ require_once("db_conn.php");
 										}
 								}
 								else if($_POST["submit"]=="editmail"){
-									$email=$_POST["email"];
+									$email=strip_tags($_POST["email"]);
 									$password=hash('sha512',$_POST["password"]);
 									$id=$_SESSION["id"];
 									$name=$_SESSION["name"];

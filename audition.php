@@ -84,9 +84,9 @@ require_once ("db_conn.php");
 						<?php
 							if (isset($_POST["request"]))
 							{
-								$description = htmlspecialchars($_POST["description"]);
+								$description = strip_tags($_POST["description"]);
 								$birthday = date($_POST["birthday"]);
-								$location = htmlspecialchars($_POST["location"]);
+								$location = strip_tags($_POST["location"]);
 								$filename = $_FILES['cv']['name'];
 								if (stripos($filename, ".pdf"))
 								{

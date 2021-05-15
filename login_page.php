@@ -50,7 +50,7 @@ require_once("db_conn.php");
 							?>
 								<?php
 									if(isset($_POST['login'])){
-											$email=$_POST["emaillog"];
+											$email=strip_tags($_POST["emaillog"]);
 											$password=hash('sha512',$_POST["passwordlog"]);
 													$stmt = $db->prepare("SELECT email,password FROM user WHERE email = ? AND password = ?");
 													$stmt->execute([$email, $password]);

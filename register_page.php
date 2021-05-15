@@ -96,11 +96,11 @@ require_once("db_conn.php");
 							use \Firebase\JWT\JWT;
 							if(isset($_POST['register'])){
 								if(isset($_POST["nickname"])||isset($_POST["name"])||isset($_POST["surname"])||isset($_POST["email"])||isset($_POST["password1"])||isset($_POST["password"])){
-									$nickname=$_POST["nickname"];
-									$name=$_POST["name"];
-									$surname=$_POST["surname"];
-									$email=$_POST["email"];
-									$team=$_POST["team"];
+									$nickname=strip_tags($_POST["nickname"]);
+									$name=strip_tags($_POST["name"]);
+									$surname=strip_tags($_POST["surname"]);
+									$email=strip_tags($_POST["email"]);
+									$team=strip_tags($_POST["team"]);
 									$password1=$_POST["password1"];
 									$password2=$_POST["password2"];
 									echo $mail;
