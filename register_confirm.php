@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	require_once("db_conn.php");
+	require_once("function.php");
 ?>
 <html>
 	<head>
