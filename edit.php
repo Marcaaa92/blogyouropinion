@@ -198,7 +198,7 @@ require_once("db_conn.php");
 									$password=hash('sha512',$_POST["password"]);
 									$id=$_SESSION["id"];
 										$stmt = $db->prepare("SELECT nickname FROM user WHERE nickname = ?");
-										$stmt->execute([strip_tags($nickname)]);
+										$stmt->execute([$nickname]);
 										if ($stmt->rowCount() == 0){
 											$stmt = $db->prepare("SELECT email,password FROM user WHERE id = ? AND password = ?");
 											$stmt->execute([$id, $password]);
