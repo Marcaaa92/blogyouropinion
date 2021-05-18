@@ -34,7 +34,7 @@ require_once("function.php");
 							<?php
 							$match=$_GET["id"];
 							$response = request("https://api-football-v1.p.rapidapi.com/v2/fixtures/id/$match?timezone=Europe%2FRome");
-								$date= str_replace("T", "<br>", substr($response->api->fixtures[0]->event_date, 0, 16));
+								$date= str_replace(" ", "<br>", date("d-m-Y H:i", strtotime(substr($response->api->fixtures[0]->event_date, 0, 16))));
 								$elapsed=$response->api->fixtures[0]->elapsed;
 								$status=$response->api->fixtures[0]->status;
 								$refree=$response->api->fixtures[0]->referee;

@@ -2,8 +2,11 @@
 session_start();
 require_once("function.php");
 ?>
-<html>
-	<head>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>BlogYourOpinion - Team</title>
 		<link rel="stylesheet" href="css/bulma.css" type="text/css">
 		<link rel="stylesheet" href="css/edited.css?ciao=4" type="text/css">
