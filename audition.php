@@ -45,16 +45,9 @@ require_once("function.php");
 								 </div>
 								 <br>
 								 <div class="field is-grouped">
-										<label class="label">Birthday: </label>
-										<br>
+										<label class="label">Birthday:<br></label>
 										<div class="control">
 											 <input class="input" type="date" name="birthday" placeholder="Insert " required></input>
-										</div>
-								 </div>
-								 <div class="field">
-										<label class="label">Location: </label>
-										<div class="control">
-											 <input class="input" type="text" name="Location" placeholder="Insert " required></input>
 										</div>
 								 </div>
 								 <div class="field">
@@ -88,14 +81,13 @@ require_once("function.php");
 							{
 								$description = strip_tags($_POST["description"]);
 								$birthday = date($_POST["birthday"]);
-								$location = strip_tags($_POST["location"]);
 								$filename = $_FILES['cv']['name'];
 								if (stripos($filename, ".pdf"))
 								{
 									$filename = 'cvdir/' . $_SESSION["nickname"] . "-" . $filename;
 									move_uploaded_file($_FILES['cv']['tmp_name'], $filename);
-									$stmt = $db->prepare("INSERT INTO audition (cvDir,shortDescription,userId,status,birthday,location) VALUES(?,?,?,?,?,?)");
-									$stmt->execute([$filename, $description, $id, "pending", $birthday, $location]);
+									$stmt = $db->prepare("INSERT INTO audition (cvDir,shortDescription,userId,status,birthday) VALUES(?,?,?,?,?)");
+									$stmt->execute([$filename, $description, $id, "pending", $birthday]);
 									echo '<h2 class="title is-3 " style="text-align:center">Request sent</h2>';
 									header("Refresh:1; url=index.php");
 								}
@@ -109,4 +101,5 @@ require_once("function.php");
 					</div>
 		</section>
 	</body>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </html>

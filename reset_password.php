@@ -33,9 +33,12 @@ require_once 'jwt/src/JWT.php';
 							<form action="" method="post" class="box">
 								<div class="field">
 									<label class="label">Email</label>
-									<div class="control">
+									<div class="control has-icons-left">
 										<input class="input" type="email" name="email" placeholder="Insert Mail" required>
-									</div>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                  </div>
 								</div>
 								<div class="field is-grouped">
 									<div class="control">
@@ -65,15 +68,21 @@ require_once 'jwt/src/JWT.php';
 														<form action="" method="post" class="box">
 															<div class="field">
 																<label class="label">New password</label>
-																<div class="control">
+																<div class="control has-icons-left">
 																	<input class="input" type="password" name="password1" id="pw1" oninput="checkpw()" placeholder="Insert your new password" minlength="6" maxlength="20" required>
-																</div>
+                                  <span class="icon is-small is-left">
+                                    <i class="fas fa-lock"></i>
+                                  </span>
+                                </div>
 															</div>
 															<div class="field">
 																<label class="label">Verification new Password</label>
-																<div class="control">
+																<div class="control has-icons-left">
 																	<input class="input" type="password" name="password2" id="pw2" oninput="checkpw()" placeholder="Re-insert your new password" minlength="6" maxlength="20" required>
-																</div>
+                                  <span class="icon is-small is-left">
+                                    <i class="fas fa-lock"></i>
+                                  </span>
+                                </div>
 																<p class="label" id="check-text-pw"></p>
 															</div>
 															<div class="field is-grouped">
@@ -141,6 +150,7 @@ require_once 'jwt/src/JWT.php';
 										$password=hash('sha512',$_POST["password1"]);
 										$stmt = $db->prepare("UPDATE user SET password = ? WHERE email=?");
 										$r = $stmt->execute([$password,$email]);
+                    header("Refresh:1; url=login_page.php");
 									}
 									else{
 										echo '<h2 class="title is-3 " style="text-align:center">Password doesnt match</h2>';
@@ -175,4 +185,5 @@ require_once 'jwt/src/JWT.php';
 		}
 	}
 	</script>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </html>

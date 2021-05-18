@@ -27,15 +27,21 @@ require_once("function.php");
 							<form action="" method="post" class="box">
 								<div class="field">
 									<label class="label">Email</label>
-									<div class="control">
+									<div class="control has-icons-left">
 										<input class="input" type="email" name="emaillog" placeholder="Insert Mail" required>
-									</div>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                  </div>
 								</div>
 								<div class="field">
 									<label class="label">Password</label>
-									<div class="control">
+									<div class="control has-icons-left">
 										<input class="input" type="password" name="passwordlog" placeholder="Insert password" required>
-									</div>
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-lock"></i>
+                    </span>
+                  </div>
 								</div>
 								<div class="field is-grouped">
 									<div class="control">
@@ -81,4 +87,5 @@ require_once("function.php");
 			</div>
 		</section>
 	</body>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </html>

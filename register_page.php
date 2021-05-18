@@ -41,16 +41,22 @@ require_once("function.php");
 
 								<div class="field">
 								  <label class="label">Nickname</label>
-								  <div class="control">
+								  <div class="control has-icons-left">
 									<input class="input" type="text" name="nickname" placeholder="Insert your name nickname" minlength="2" maxlength="20" required>
-								  </div>
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                  </span>
+                  </div>
 								</div>
 
 								<div class="field">
 								  <label class="label">Email</label>
-								  <div class="control">
+								  <div class="control has-icons-left">
 									<input class="input" type="email" name="email" placeholder="Insert mail" minlength="6" maxlength="60" required>
-								  </div>
+                  <span class="icon is-small is-left">
+                      <i class="fas fa-envelope"></i>
+                  </span>
+                  </div>
 								</div>
 								<label class="label">Your favourite team</label>
 								<div class="select">
@@ -66,16 +72,22 @@ require_once("function.php");
 								</div>
 								<div class="field">
 								  <label class="label">Password</label>
-								  <div class="control">
+								  <div class="control has-icons-left">
 									<input class="input" type="password" name="password1" id="pw1" oninput="checkpw()" placeholder="Insert your name password" minlength="6" maxlength="20" required>
-								  </div>
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-lock"></i>
+                  </span>
+                  </div>
 								</div>
 
 								<div class="field">
 								  <label class="label">Reinserisci la password</label>
-								  <div class="control">
+								  <div class="control has-icons-left">
 									<input class="input" type="password" name="password2" id="pw2" oninput="checkpw()" placeholder="Re-nsert your name password" minlength="6" maxlength="20" required>
-									<p class="label" id="check-text-pw"></p>
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-lock"></i>
+                  </span>
+                  <p class="label" id="check-text-pw"></p>
 								  </div>
 								</div>
 								<div class="field is-grouped">
@@ -178,4 +190,5 @@ require_once("function.php");
 		}
 	}
 	</script>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </html>
