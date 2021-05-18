@@ -7707,7 +7707,7 @@ label.panel-block:hover {
     width: unset;
   }
   .column.is-full-desktop {
-    flex: none;
+    flex:auto;
     width: 100%;
   }
   .column.is-three-quarters-desktop {

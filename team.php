@@ -4,9 +4,7 @@ require_once("function.php");
 ?>
 <html>
 	<head>
-		<title>BlogYourOpinion-Homepage</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>BlogYourOpinion - Team</title>
 		<link rel="stylesheet" href="css/bulma.css" type="text/css">
 		<link rel="stylesheet" href="css/edited.css?ciao=4" type="text/css">
 	</head>

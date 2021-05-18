@@ -7,11 +7,13 @@ require_once 'jwt/src/ExpiredException.php';
 require_once 'jwt/src/SignatureInvalidException.php';
 require_once 'jwt/src/JWT.php';
 ?>
-<html>
-	<head>
-		<title>BlogYourOpinion-Login</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>BlogYourOpinion - Reset password</title>
 		<link rel="stylesheet" href="css/bulma.css" type="text/css">
 		<link rel="stylesheet" href="css/edited.css?ciao=4" type="text/css">
 	</head>

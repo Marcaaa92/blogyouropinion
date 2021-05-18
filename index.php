@@ -2,15 +2,16 @@
 session_start();
 require_once("function.php");
 ?>
-<html>
-	<head>
-		<title>BlogYourOpinion-Homepage</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="css/bulma.css" type="text/css">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BlogYourOpinion - Homepage</title>
+    <link rel="stylesheet" href="css/bulma.css">
 		<link rel="stylesheet" href="css/edited.css?ciao=4" type="text/css">
-		<link rel="icon" href="favicon.ico" type="image/x-icon"/>
-	</head>
+  </head>
 	<body>
 		<?php
 			loadNav();
@@ -46,7 +47,7 @@ require_once("function.php");
 
 			?>
 			<div class="columns is-desktop">
-				<div class="column is-full-mobile is-full-tablet is-full-third-desktop is-one-third-widescreen is-one-third-fullhd" >
+				<div class="column is-full-mobile is-full-tablet is-full-desktop is-one-third-widescreen is-one-third-fullhd" >
 						<?php
 						echo "<h1 class=\"title is-2\" style='text-align:center'>Standing</h1>";
 							$stmt = $db->prepare("SELECT timestamp,response FROM standing ORDER BY timestamp DESC LIMIT 1");
@@ -82,7 +83,7 @@ require_once("function.php");
 							echo"</table></div>";
 						?>
 					</div>
-				<div class="column is-full-mobile is-full-tablet is-full-third-desktop is-one-third-widescreen is-one-third-fullhd">
+				<div class="column is-full-mobile is-full-tablet is-full-desktop is-one-third-widescreen is-one-third-fullhd">
 						<?php
 						echo "<h1 class=\"title is-2\" style='text-align:center'>Current turn</h1>";
 							$stmt = $db->prepare("SELECT timestamp,response FROM current ORDER BY timestamp DESC LIMIT 1");
@@ -146,7 +147,7 @@ require_once("function.php");
 								echo "</table>";
 						?>
 				</div>
-				<div class="coulum is-full-mobile is-full-tablet is-full-third-desktop is-one-third-widescreen is-one-third-fullhd">
+				<div class="coulum is-full-mobile is-full-tablet is-full-desktop is-one-third-widescreen is-one-third-fullhd">
 					<?php
 					$stmt = $db->prepare("SELECT timestamp,response FROM topscorer ORDER BY timestamp DESC LIMIT 1");
 					$stmt->execute([]);
