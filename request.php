@@ -29,13 +29,13 @@ require_once("function.php");
 											$stmt->execute(["accepted", $_GET["id"]]);
 											$stmt = $db->prepare("UPDATE user SET role = ? WHERE id=?");
 											$stmt->execute([2, $_GET["iduser"]]);
-											mail($_GET["email"], 'Result of your audition BlogYourOpinion', "hello, your request to become a journalist has been accepted, now you can publish articles in the dedicated button of the site");
+											sendMail($_GET["email"], 'Result of your audition BlogYourOpinion', "hello, your request to become a journalist has been accepted, now you can publish articles in the dedicated button of the site");
 										}
 										else if($_GET["action"]=="rejected")
 										{
 											$stmt = $db->prepare("UPDATE audition SET status = ? WHERE id=?");
 											$stmt->execute(["rejected", $_GET["id"]]);
-											mail($_GET["email"], 'Result of your audition BlogYourOpinion', "hello, your request to become a journalist has been rejected.");
+											sendMail($_GET["email"], 'Result of your audition BlogYourOpinion', "hello, your request to become a journalist has been rejected.");
 										}
 										else if($_GET["action"]=="remove")
 										{
@@ -43,13 +43,13 @@ require_once("function.php");
 											$stmt->execute(["removed", $_GET["id"]]);
 											$stmt = $db->prepare("UPDATE user SET role = ? WHERE id=?");
 											$stmt->execute([4, $_GET["iduser"]]);
-											mail($_GET["email"], 'Result of your audition BlogYourOpinion', "hello, you have been removed from the role 'journalist'");
+											sendMail($_GET["email"], 'Result of your audition BlogYourOpinion', "hello, you have been removed from the role 'journalist'");
 										}
 									}
 									else{
 										$stmt = $db->prepare("UPDATE articles SET approvated = ? WHERE id=?");
 										$stmt->execute([1, $_GET["id"]]);
-										mail($_GET["email"], 'Result of your article BlogYourOpinion', "Your article has been approved<br>Link: https://blogyouropinion.ddns.net/article.php?id=". $_GET["id"]);
+										sendMail($_GET["email"], 'Result of your article BlogYourOpinion', "Your article has been approved<br>Link: https://blogyouropinion.ddns.net/article.php?id=". $_GET["id"]);
 										$stmt = $db->prepare("SELECT user.telegramId, articles.title, articles.subtitle, articles.imgdir FROM user JOIN articles WHERE articles.id=? AND telegramId IS NOT NULL AND articles.team=user.team");
 										$stmt->execute([$_GET["id"]]);
 										while($row = $stmt->fetch()){
