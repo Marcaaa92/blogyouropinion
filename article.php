@@ -20,15 +20,18 @@ require_once("function.php");
 						if (isset($_GET["id"]))
 						{
 							$idArticle = $_GET["id"];
-							$stmt = $db->prepare("SELECT articles.approvated, articles.limited, articles.title, articles.subtitle, articles.article, articles.date, articles.imgdir, user.nickname, category.categoryName, team.teamName, team.id as teamId FROM articles JOIN user ON user.id=articles.journalist JOIN category ON category.id=articles.category JOIN team ON team.id=articles.team WHERE articles.id=?");
+							$stmt = $db->prepare("SELECT articles.approvated, articles.limited, articles.title, articles.subtitle, articles.article, articles.views, articles.date, articles.imgdir, user.nickname, category.categoryName, team.teamName, team.id as teamId FROM articles JOIN user ON user.id=articles.journalist JOIN category ON category.id=articles.category JOIN team ON team.id=articles.team WHERE articles.id=?");
 							$stmt->execute([$idArticle]);
+
 							if ($stmt->rowCount() == 1)
 							{
 								while ($row = $stmt->fetch())
 								{
 									if ($_SESSION["role"] == "journalist" || $_SESSION["role"] == "redactor")
 									{
-										loadArticle($row["title"], $row["subtitle"], $row["categoryName"], $row["teamName"], $row["date"], $row["nickname"],$row["article"],$row["teamId"],$row["imgdir"]);
+										loadArticle($row["title"], $row["subtitle"], $row["categoryName"], $row["teamName"], $row["date"], $row["nickname"],$row["article"],$row["teamId"],$row["imgdir"],$row["views"]);
+                    $stmt = $db->prepare("UPDATE articles SET views = views + 1 WHERE id = ?");
+                    $stmt->execute([$idArticle]);
 										if ($row["approvated"] == 1)
 										{
 											if ($row["limited"] == 1)
@@ -47,11 +50,15 @@ require_once("function.php");
 									}
 									else if (($_SESSION["role"] == "registred" || $_SESSION["role"]) == "removed" && $row["approvated"] == 1 && $row["limited"] == 1)
 									{
-										loadArticle($row["title"], $row["subtitle"], $row["categoryName"], $row["teamName"], $row["date"], $row["nickname"],$row["article"],$row["teamId"],$row["imgdir"]);
+										loadArticle($row["title"], $row["subtitle"], $row["categoryName"], $row["teamName"], $row["date"], $row["nickname"],$row["article"],$row["teamId"],$row["imgdir"],$row["views"]);
+                    $stmt = $db->prepare("UPDATE articles SET views = views + 1 WHERE id = ?");
+                    $stmt->execute([$idArticle]);
 									}
 									else if ($row["limited"] == 0 && $row["approvated"] == 1)
 									{
-										loadArticle($row["title"], $row["subtitle"], $row["categoryName"], $row["teamName"], $row["date"], $row["nickname"],$row["article"],$row["teamId"],$row["imgdir"]);
+										loadArticle($row["title"], $row["subtitle"], $row["categoryName"], $row["teamName"], $row["date"], $row["nickname"],$row["article"],$row["teamId"],$row["imgdir"],$row["views"]);
+                    $stmt = $db->prepare("UPDATE articles SET views = views + 1 WHERE id = ?");
+                    $stmt->execute([$idArticle]);
 									}
 									else
 									{
