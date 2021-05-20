@@ -82,7 +82,7 @@ require_once("function.php");
 								$description = strip_tags($_POST["description"]);
 								$birthday = date($_POST["birthday"]);
 								$filename = $_FILES['cv']['name'];
-								if (stripos($filename, ".pdf"))
+								if ($_FILES['cv']['type']=="application/pdf")
 								{
 									$filename = 'cvdir/' . $_SESSION["nickname"] . "-" . $filename;
 									move_uploaded_file($_FILES['cv']['tmp_name'], $filename);

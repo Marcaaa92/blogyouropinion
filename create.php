@@ -104,9 +104,8 @@ require_once("function.php");
 									$limited=0;
 									$filename = $_FILES['pic']['name'];
 									$date=date("Y-m-d H:i:s");
-									if(stripos($filename, ".jpg")||stripos($filename, ".png")||stripos($filename, ".jpeg")){
+									if($_FILES['pic']['type']=="image/png"||$_FILES['pic']['type']=="image/jpeg"){
 											$filename='imgarticle/'.$filename;
-											//	move_uploaded_file($_FILES['pic']['tmp_name'],$filename);
 												if(stripos($filename, ".jpg")||stripos($filename, ".jpeg")){
 												$img = imagecreatefromjpeg($_FILES['pic']['tmp_name']);
 												}
