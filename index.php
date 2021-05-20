@@ -163,13 +163,15 @@ require_once("function.php");
 					}
 					echo "<h1 class=\"title is-2\" style='text-align:center'>Top scorer</h1>";
 					echo"<div class='table-container'><table class=\"table\">";
-					echo "<tr><th>Player</th><th>Goal</th><th>Assist</th><th>Attendance</th></tr>";
+					echo "<tr><th>Player</th><th>Goal</th><th>Total shot</th><th>Shot on goal</th><th>Assist</th><th>Attendance</th></tr>";
 					for($i=0; $i<count($response_data->api->topscorers); $i++){
 						$name=$response_data->api->topscorers[$i]->player_name;
 						$played=$response_data->api->topscorers[$i]->games->appearences;
 						$goal=$response_data->api->topscorers[$i]->goals->total;
 						$assist=$response_data->api->topscorers[$i]->goals->assists;
-						echo "<tr><td>$name</td><td>$goal</td><td>$assist</td><td>$played</td></tr>";
+            $shotOnGoal=$response_data->api->topscorers[$i]->shots->on;
+            $total=$response_data->api->topscorers[$i]->shots->total;
+						echo "<tr><td>$name</td><td>$goal</td><td>$total</td><td>$shotOnGoal</td><td>$assist</td><td>$played</td></tr>";
 					}
 					echo"</table></div>";
 					?>
