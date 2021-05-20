@@ -117,8 +117,8 @@ require_once("function.php");
 											if(isset($_POST["limited"])){
 												$limited=1;
 											}
-											$stmt = $db->prepare("INSERT INTO articles (journalist,limited,approvated, title, subtitle, category,article,date,team, imgdir) VALUES(?,?,?,?,?,?,?,?,?,?)");
-											$stmt->execute([$id,$limited,0,$title,$subtitle,$category,$article,$date,$team,$filename]);
+											$stmt = $db->prepare("INSERT INTO articles (journalist,limited,approvated, title, subtitle, category,article,date,team, imgdir, views) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+											$stmt->execute([$id,$limited,0,$title,$subtitle,$category,$article,$date,$team,$filename,0]);
 											$idInsert = $db->lastInsertId();
 											echo '<a href="article.php?id='. $idInsert. '"><p>look at the article just written</p></a>';
 									}
