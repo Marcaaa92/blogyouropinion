@@ -47,7 +47,7 @@ require_once("function.php");
 												<div class="column is-full-mobile is-full-tablet is-full-third-desktop is-half-widescreen is-half-fullhd">
 													<strong>Name: </strong>'.$row["name"].'</br>
 													<strong>Email: </strong>'.$row["email"].'</br>
-													<strong>Registred on: </strong>'.$row["subscribed"].'</br>
+													<strong>Registred on: </strong>'.str_replace(" ", "<br>", date("d-m-Y H:i", strtotime($row["subscribed"]))).'</br>
 													<strong>Role in the blog: </strong>'.$row["roleName"].'</br>
 												</div>
 												<div class="column is-full-mobile is-full-tablet is-full-third-desktop is-half-widescreen is-half-fullhd">
