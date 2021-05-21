@@ -131,6 +131,7 @@ require_once("function.php");
 				</div>
 		</section>
 	</body>
+  <script src="https://kit.fontawesome.com/ee36c308c7.js" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 	<script>
 		var simplemde = new SimpleMDE();

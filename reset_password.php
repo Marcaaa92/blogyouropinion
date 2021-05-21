@@ -22,6 +22,7 @@ require_once 'jwt/src/JWT.php';
 			loadNav();
 		?>
 		<section class="section">
+      <div class="container is-max-desktop">
 					<div class="columns is-desktop">
 						<div class="column">
 							<?php
@@ -160,6 +161,7 @@ require_once 'jwt/src/JWT.php';
 							?>
 						</div>
 					</div>
+        </div>
 		</section>
 	</body>
 	<script>
@@ -185,5 +187,5 @@ require_once 'jwt/src/JWT.php';
 		}
 	}
 	</script>
-  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <script src="https://kit.fontawesome.com/ee36c308c7.js" crossorigin="anonymous"></script>
 </html>

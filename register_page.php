@@ -190,5 +190,5 @@ require_once("function.php");
 		}
 	}
 	</script>
-  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+<script src="https://kit.fontawesome.com/ee36c308c7.js" crossorigin="anonymous"></script>
 </html>
