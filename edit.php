@@ -55,7 +55,7 @@ require_once("function.php");
 													<strong>Nickname: </strong>'.$row["nickname"].'</br>
 													<strong>Followed team: </strong>'.$row["teamName"].'</br>';
                           if($row["telegramId"]!=NULL){
-                            echo '<strong>Connection with telegram: </strong> Yes</br>';
+                            echo '<strong>Connection with telegram: </strong> Yes [ID='.$row["telegramId"].']</br>';
                           }
                           else{
                             echo '<strong>Connection with telegram: </strong> No</br>';
