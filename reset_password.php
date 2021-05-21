@@ -35,7 +35,7 @@ require_once 'jwt/src/JWT.php';
 								<div class="field">
 									<label class="label">Email</label>
 									<div class="control has-icons-left">
-										<input class="input" type="email" name="email" placeholder="Insert Mail" required>
+										<input class="input" type="email" name="email" placeholder="Insert your email" required>
                     <span class="icon is-small is-left">
                         <i class="fas fa-envelope"></i>
                     </span>
@@ -77,7 +77,7 @@ require_once 'jwt/src/JWT.php';
                                 </div>
 															</div>
 															<div class="field">
-																<label class="label">Verification new Password</label>
+																<label class="label">Re-insert new Password</label>
 																<div class="control has-icons-left">
 																	<input class="input" type="password" name="password2" id="pw2" oninput="checkpw()" placeholder="Re-insert your new password" minlength="6" maxlength="20" required>
                                   <span class="icon is-small is-left">

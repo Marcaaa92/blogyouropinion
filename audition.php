@@ -27,8 +27,8 @@ require_once("function.php");
 							{
 								echo '
 								<form action="" method="post" enctype="multipart/form-data" class="box">
-								 <h2 class="title is-3 " style="text-align:center">Form to canditate as journalist</h2>
-								 <p style="text-align:center">Compile this form to candidate as journalist, you will recive an email if you have been accept</p>
+								 <h2 class="title is-3 " style="text-align:center">Journalist candidation form</h2>
+								 <p style="text-align:center">Compile this form to candidate as journalist, you will recive an email if you have been accepted</p>
 								 <br>
 								 <div class="file">
 										<label class="file-label">
@@ -47,13 +47,13 @@ require_once("function.php");
 								 <div class="field is-grouped">
 										<label class="label">Birthday:<br></label>
 										<div class="control">
-											 <input class="input" type="date" name="birthday" placeholder="Insert " required></input>
+											 <input class="input" type="date" name="birthday" placeholder="Insert your birthday" required></input>
 										</div>
 								 </div>
 								 <div class="field">
 										<label class="label">Short description of you and your passion</label>
 										<div class="control">
-											 <textarea class="textarea" type="text" name="description" placeholder="Insert " minlength="100" maxlength="255" required></textarea>
+											 <textarea class="textarea" type="text" name="description" placeholder="Insert something" minlength="100" maxlength="255" required></textarea>
 										</div>
 								 </div>
 								 <div class="field is-grouped">
@@ -69,10 +69,10 @@ require_once("function.php");
 								$stmt->execute([$id]);
 								$row = $stmt->fetch();
 								if($row["status"]=="rejected"){
-									echo '<h2 class="title is-3 " style="text-align:center">Im sorry, your request has been rejected</h2>';
+									echo '<h2 class="title is-3 " style="text-align:center">I\'m sorry, your request has been rejected</h2>';
 								}
 								else{
-								echo '<h2 class="title is-3 " style="text-align:center">You have already made a request or you are already journalist or redactor, wait for the response of the redactor</h2>';
+								echo '<h2 class="title is-3 " style="text-align:center">You have already made a request or you are already journalist or redactor, wait for the redactor to reply</h2>';
 								}
 							}
 							?>
@@ -93,7 +93,7 @@ require_once("function.php");
 								}
 								else
 								{
-									echo '<h2 class="title is-3 " style="text-align:center">It isnt a pdf file, load a pdf file</h2>';
+									echo '<h2 class="title is-3 " style="text-align:center">It isn\'t a pdf file, load a pdf file</h2>';
 								}
 							}
 							?>

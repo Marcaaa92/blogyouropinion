@@ -22,3 +22,16 @@
 			margin-left: auto;
 			margin-right: auto;
 		}
+		.yourteam{
+			background-color:#3273dc;
+			color:white;
+		}
+		.champions{
+			background-color:blue;
+		}
+		.europa{
+			background-color:orange;
+		}
+		.playout{
+			background-color:red;
+		}

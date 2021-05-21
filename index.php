@@ -63,7 +63,7 @@ require_once("function.php");
 								$stmt->execute([$timestamp,json_encode($response_data)]);
 							}
 							echo"<div class='table-container'><table class=\"table\">";
-							echo "<th><th>#P</th><th>Logo</th><th>Team</th><th>Points</th><th>Played Match</th><th>Goals for</th><th>Goal against</th><th>GD</th></tr>";
+							echo "<th><th>#P</th><th>Logo</th><th>Team</th><th>Points</th><th>Games played</th><th>Goals for</th><th>Goal against</th><th>GD</th></tr>";
 							for($i=0; $i<count($response_data->api->standings[0]);$i++){
 									$teamName=$response_data->api->standings[0][$i]->teamName;
 									$rank=$response_data->api->standings[0][$i]->rank;
@@ -75,11 +75,27 @@ require_once("function.php");
 									$team_id=$response_data->api->standings[0][$i]->team_id;
 									$points=$response_data->api->standings[0][$i]->points;
 									$goal_diff=($goalsFor)-($goalsAgainst);
-									if($_SESSION["teamId"]==$team_id)
-										echo "<tr style='background-color:#3273dc; color:white'><td></td><td><b>$rank</b></td><td><image src=\"$logo\" style=\"width:50px\"></td><td><a href=\"./team.php?id=$team_id&action=article\" style='color:white;'>$teamName</a></td><td><b>$points</b></td><td>$matchsPlayed</td><td>$goalsFor</td><td>$goalsAgainst</td><td>$goal_diff</td></tr>";
-									else
-										echo "<tr><td></td><td><b>$rank</b></td><td><image src=\"$logo\" style=\"width:50px\"></td><td><a href=\"./team.php?id=$team_id&action=article\">$teamName</a></td><td><b>$points</b></td><td>$matchsPlayed</td><td>$goalsFor</td><td>$goalsAgainst</td><td>$goal_diff</td></tr>";
-								}
+                  if($i<4)
+  									if($_SESSION["teamId"]==$team_id)
+  										echo "<tr class='yourteam'><td class='champions'></td><td><b>$rank</b></td><td><image src=\"$logo\" style=\"width:50px\"></td><td><a href=\"./team.php?id=$team_id&action=article\" style='color:white;'>$teamName</a></td><td><b>$points</b></td><td>$matchsPlayed</td><td>$goalsFor</td><td>$goalsAgainst</td><td>$goal_diff</td></tr>";
+  									else
+  										echo "<tr><td class='champions'></td><td><b>$rank</b></td><td><image src=\"$logo\" style=\"width:50px\"></td><td><a href=\"./team.php?id=$team_id&action=article\">$teamName</a></td><td><b>$points</b></td><td>$matchsPlayed</td><td>$goalsFor</td><td>$goalsAgainst</td><td>$goal_diff</td></tr>";
+                  else if($i==4)
+                    if($_SESSION["teamId"]==$team_id)
+  										echo "<tr class='yourteam'><td class='europa'></td><td><b>$rank</b></td><td><image src=\"$logo\" style=\"width:50px\"></td><td><a href=\"./team.php?id=$team_id&action=article\" style='color:white;'>$teamName</a></td><td><b>$points</b></td><td>$matchsPlayed</td><td>$goalsFor</td><td>$goalsAgainst</td><td>$goal_diff</td></tr>";
+  									else
+  										echo "<tr><td class='europa'></td><td><b>$rank</b></td><td><image src=\"$logo\" style=\"width:50px\"></td><td><a href=\"./team.php?id=$team_id&action=article\">$teamName</a></td><td><b>$points</b></td><td>$matchsPlayed</td><td>$goalsFor</td><td>$goalsAgainst</td><td>$goal_diff</td></tr>";
+                  else if($i>4&&$i<17)
+                    if($_SESSION["teamId"]==$team_id)
+  										echo "<tr class='yourteam'><td></td><td><b>$rank</b></td><td><image src=\"$logo\" style=\"width:50px\"></td><td><a href=\"./team.php?id=$team_id&action=article\" style='color:white;'>$teamName</a></td><td><b>$points</b></td><td>$matchsPlayed</td><td>$goalsFor</td><td>$goalsAgainst</td><td>$goal_diff</td></tr>";
+  									else
+  										echo "<tr><td></td><td><b>$rank</b></td><td><image src=\"$logo\" style=\"width:50px\"></td><td><a href=\"./team.php?id=$team_id&action=article\">$teamName</a></td><td><b>$points</b></td><td>$matchsPlayed</td><td>$goalsFor</td><td>$goalsAgainst</td><td>$goal_diff</td></tr>";
+                  else
+                    if($_SESSION["teamId"]==$team_id)
+                      echo "<tr class='yourteam'><td class='playout'></td><td><b>$rank</b></td><td><image src=\"$logo\" style=\"width:50px\"></td><td><a href=\"./team.php?id=$team_id&action=article\" style='color:white;'>$teamName</a></td><td><b>$points</b></td><td>$matchsPlayed</td><td>$goalsFor</td><td>$goalsAgainst</td><td>$goal_diff</td></tr>";
+                    else
+                      echo "<tr><td class='playout'></td><td><b>$rank</b></td><td><image src=\"$logo\" style=\"width:50px\"></td><td><a href=\"./team.php?id=$team_id&action=article\">$teamName</a></td><td><b>$points</b></td><td>$matchsPlayed</td><td>$goalsFor</td><td>$goalsAgainst</td><td>$goal_diff</td></tr>";
+                }
 							echo"</table></div>";
 						?>
 					</div>
@@ -163,7 +179,7 @@ require_once("function.php");
 					}
 					echo "<h1 class=\"title is-2\" style='text-align:center'>Top scorer</h1>";
 					echo"<div class='table-container'><table class=\"table\">";
-					echo "<tr><th>Player</th><th>Goal</th><th>Total shot</th><th>Shot on goal</th><th>Assist</th><th>Attendance</th></tr>";
+					echo "<tr><th>Player</th><th>Goal</th><th>Total shot</th><th>Shot on goal</th><th>Assist</th><th>Appearances</th></tr>";
 					for($i=0; $i<count($response_data->api->topscorers); $i++){
 						$name=$response_data->api->topscorers[$i]->player_name;
 						$played=$response_data->api->topscorers[$i]->games->appearences;
@@ -171,7 +187,7 @@ require_once("function.php");
 						$assist=$response_data->api->topscorers[$i]->goals->assists;
             $shotOnGoal=$response_data->api->topscorers[$i]->shots->on;
             $total=$response_data->api->topscorers[$i]->shots->total;
-						echo "<tr><td>$name</td><td>$goal</td><td>$total</td><td>$shotOnGoal</td><td>$assist</td><td>$played</td></tr>";
+						echo "<tr><td><b>$name</b></td><td>$goal</td><td>$total</td><td>$shotOnGoal</td><td>$assist</td><td>$played</td></tr>";
 					}
 					echo"</table></div>";
 					?>

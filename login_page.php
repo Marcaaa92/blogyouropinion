@@ -28,7 +28,7 @@ require_once("function.php");
 								<div class="field">
 									<label class="label">Email</label>
 									<div class="control has-icons-left">
-										<input class="input" type="email" name="emaillog" placeholder="Insert Mail" required>
+										<input class="input" type="email" name="emaillog" placeholder="Insert your email" required>
                     <span class="icon is-small is-left">
                         <i class="fas fa-envelope"></i>
                     </span>
@@ -37,7 +37,7 @@ require_once("function.php");
 								<div class="field">
 									<label class="label">Password</label>
 									<div class="control has-icons-left">
-										<input class="input" type="password" name="passwordlog" placeholder="Insert password" required>
+										<input class="input" type="password" name="passwordlog" placeholder="Insert your password" required>
                     <span class="icon is-small is-left">
                       <i class="fas fa-lock"></i>
                     </span>

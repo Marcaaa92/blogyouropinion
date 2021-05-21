@@ -64,7 +64,7 @@ require_once("function.php");
 								$stmt = $db->prepare("SELECT audition.id,audition.status, user.id AS userId, user.name, user.surname, user.nickname, user.email, audition.cvDir, audition.shortDescription FROM audition JOIN user ON user.id = audition.userId ORDER BY audition.id DESC");
 								$stmt->execute([]);
 								echo'<div class="table-container"><table class="table">
-								<thead><tr><th>Id</th><th>Name</th><th>Surname</th><th>Nickname</th><th>email</th><th>cvDir</th><th>shortDescription</th><th>Status</th></tr></thead><tbody>';
+								<thead><tr><th>ID</th><th>Name</th><th>Surname</th><th>Nickname</th><th>Email</th><th>cvDir</th><th>Short description</th><th>Status</th></tr></thead><tbody>';
 								while($row = $stmt->fetch()){
 									$idUser=$row["userId"];
 									$idReq=$row["id"];
@@ -98,7 +98,7 @@ require_once("function.php");
 								$stmt = $db->prepare("SELECT articles.id, articles.approvated, articles.limited, articles.title, articles.date, user.nickname, user.email FROM articles JOIN user ON user.id=articles.journalist ORDER BY articles.id DESC");
 								$stmt->execute([]);
 								echo'<div class="table-container"><table class="table" style="white-space: normal;">
-								<thead><tr><th>Id</th><th>Journalist</th><th>Title</th><th>Date</th><th>Limitato</th><th>Status</th></tr></thead><tbody>';
+								<thead><tr><th>ID</th><th>Journalist</th><th>Title</th><th>Date</th><th>Limited</th><th>Status</th></tr></thead><tbody>';
 								while($row = $stmt->fetch()){
 									$idReq=$row["id"];
 									if($row["approvated"]==0){
@@ -106,7 +106,7 @@ require_once("function.php");
 									echo "<tr><td>".$row["id"]."</td><td>".$row["nickname"]."</td><td><a href='article.php?id=".$row["id"]."''>".$row["title"]."</a></td><td>".$row["date"]."</td><td>".$row["limited"]."</td><td><a href='request.php?id=$idReq&email=$email&action=accepted&type=article'>Accept</a></td></tr>";
 									}
 									else if($row["approvated"]==1){
-										echo "<tr><td>".$row["id"]."</td><td>".$row["nickname"]."</td><td><a href='article.php?id=".$row["id"]."''>".$row["title"]."</a></td><td>".$row["date"]."</td><td>".$row["limited"]."</td><td>Accettato</td></tr>";
+										echo "<tr><td>".$row["id"]."</td><td>".$row["nickname"]."</td><td><a href='article.php?id=".$row["id"]."''>".$row["title"]."</a></td><td>".$row["date"]."</td><td>".$row["limited"]."</td><td>Accepted</td></tr>";
 									}
 								}
 								echo'</tbody></table></div>';

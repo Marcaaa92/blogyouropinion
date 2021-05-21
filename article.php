@@ -36,16 +36,16 @@ require_once("function.php");
 										{
 											if ($row["limited"] == 1)
 											{
-												echo '<br><br><h1 class="title is-5 " style="color:grey">Approvato in modalita limitata</h1>';
+												echo '<br><br><h1 class="title is-5 " style="color:grey">Approved in limited edition</h1>';
 											}
 											else
 											{
-												echo '<br><br><h1 class="title is-5 " style="color:grey">Approvato</h1>';
+												echo '<br><br><h1 class="title is-5 " style="color:grey">Approved</h1>';
 											}
 										}
 										else
 										{
-											echo '<br><br><h1 class="title is-5 " style="color:grey">Pending o non approvato</h1>';
+											echo '<br><br><h1 class="title is-5 " style="color:grey">Pending or not approvated</h1>';
 										}
 									}
 									else if (($_SESSION["role"] == "registred" || $_SESSION["role"]) == "removed" && $row["approvated"] == 1 && $row["limited"] == 1)
@@ -62,18 +62,18 @@ require_once("function.php");
 									}
 									else
 									{
-										echo '<h2 class="title is-3 " style="text-align:center">Non puoi leggere questo articolo oppure non è stato approvato</h2>';
+										echo '<h2 class="title is-3 " style="text-align:center">Cannot read this article or it has not been approved yet</h2>';
 									}
 								}
 							}
 							else
 							{
-								echo '<h2 class="title is-3 " style="text-align:center">Articolo non trovato</h2>';
+								echo '<h2 class="title is-3 " style="text-align:center">Article not found</h2>';
 							}
 						}
 						else
 						{
-							echo '<h2 class="title is-3 " style="text-align:center">Non hai richiesto articoli</h2>';
+							echo '<h2 class="title is-3 " style="text-align:center">You have not requested any articles.</h2>';
 						}
 						?>
 	</body>

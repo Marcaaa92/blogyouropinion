@@ -145,7 +145,7 @@ require_once("function.php");
 										$stmt = $db->prepare("INSERT INTO playersbyteam(timestamp,response,teamId) VALUES (?,?,?)");
 										$stmt->execute([$timestamp,json_encode($response),$id]);
 									}
-									echo '<h2 class="title is-3 " style="text-align:center">Ecco i giocatori che hanno disputato almeno una partita in serie a</h2>';
+									echo '<h2 class="title is-3 " style="text-align:center">Here are the players who have played at least one match in Serie A</h2>';
 									echo '<div id="table_div" class="table"></div>';
 								}
 								else{

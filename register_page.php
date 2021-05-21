@@ -73,7 +73,7 @@ require_once("function.php");
 								<div class="field">
 								  <label class="label">Password</label>
 								  <div class="control has-icons-left">
-									<input class="input" type="password" name="password1" id="pw1" oninput="checkpw()" placeholder="Insert your name password" minlength="6" maxlength="20" required>
+									<input class="input" type="password" name="password1" id="pw1" oninput="checkpw()" placeholder="Insert your password" minlength="6" maxlength="20" required>
                   <span class="icon is-small is-left">
                     <i class="fas fa-lock"></i>
                   </span>
@@ -81,9 +81,9 @@ require_once("function.php");
 								</div>
 
 								<div class="field">
-								  <label class="label">Reinserisci la password</label>
+								  <label class="label">Confirm password</label>
 								  <div class="control has-icons-left">
-									<input class="input" type="password" name="password2" id="pw2" oninput="checkpw()" placeholder="Re-nsert your name password" minlength="6" maxlength="20" required>
+									<input class="input" type="password" name="password2" id="pw2" oninput="checkpw()" placeholder="Re-insert your name password" minlength="6" maxlength="20" required>
                   <span class="icon is-small is-left">
                     <i class="fas fa-lock"></i>
                   </span>
@@ -99,7 +99,7 @@ require_once("function.php");
 							<?php
 							}
 							else{
-								echo '<h2 class="title is-3 " style="text-align:center">You are arleady signed up in</h2>';
+								echo '<h2 class="title is-3 " style="text-align:center">You are arleady logged in</h2>';
 							}
 							?>
 							<?php
@@ -119,7 +119,7 @@ require_once("function.php");
 									$password2=$_POST["password2"];
 									echo $mail;
 									if($password1!=$password2){
-										echo '<h2 class="title is-3 " style="text-align:center">Le password non coincidono</h2>';
+										echo '<h2 class="title is-3 " style="text-align:center">Passwords do not match</h2>';
 									}
 									else{
 											$stmt = $db->prepare("SELECT nickname FROM user WHERE nickname = ?");
@@ -149,16 +149,16 @@ require_once("function.php");
 														echo '<h2 class="title is-4 " style="text-align:center">Check your email inbox to confirm your email</h2>';
 												  }
 												  else{
-													echo '<h2 class="title is-3 " style="text-align:center">Email gia presa</h2>';
+													echo '<h2 class="title is-3 " style="text-align:center">Email arleady taken</h2>';
 												  }
 											}
 											else{
-												echo '<h2 class="title is-3 " style="text-align:center">Nickname gia preso</h2>';
+												echo '<h2 class="title is-3 " style="text-align:center">Nickname arleady taken</h2>';
 											}
 									}
 								}
 								else{
-									echo '<h2 class="title is-3 " style="text-align:center">Manca qualche campo, controlla tutti i campi</h2>';
+									echo '<h2 class="title is-3 " style="text-align:center">Missing fields, check if all fields are filled</h2>';
 								}
 							}
 							?>
@@ -172,7 +172,7 @@ require_once("function.php");
 	  var pw1 = document.getElementById("pw1").value;
 	  var pw2 = document.getElementById("pw2").value;
 	  if(pw1!=pw2){
-	  	document.getElementById("check-text-pw").innerHTML = "Le password non coincidono";
+	  	document.getElementById("check-text-pw").innerHTML = "The password doesn't match";
 			document.getElementById("register").disabled = true;
 		}
 	  else{

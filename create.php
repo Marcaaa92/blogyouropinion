@@ -20,18 +20,18 @@ require_once("function.php");
 		<section class="section is-four-fifth">
 			<div class="columns is-desktop">
 				<div class="column">
-					<h2 class="title is-3 " style="text-align:center">Form to pubblish an article</h2>
+					<h2 class="title is-3 " style="text-align:center">Article publish form</h2>
 							<?php
 								if($_SESSION["role"]=="journalist"||$_SESSION["role"]=="redactor"){
 									echo'
 										<form action="" method="post" enctype="multipart/form-data" class="box">
 													<div class="field">
-													  <label class="label">Title(255 max characters)</label>
+													  <label class="label">Title</label>
 													  <div class="control">
 														<input class="input" type="text" name="title" placeholder="Insert the title of article" maxlength="255" required>
 													</div>
 													<div class="field">
-													  <label class="label">Subtitle(255 max characters)</label>
+													  <label class="label">Subtitle</label>
 													  <div class="control">
 														<input class="input" type="text" name="subtitle" placeholder="Insert the subtitle of article" maxlength="255" required>
 													</div>
@@ -70,7 +70,7 @@ require_once("function.php");
 																<i class="fas fa-upload"></i>
 															  </span>
 															  <span class="file-label">
-																Load artticle pic...
+																Load article pic...
 															  </span>
 															</span>
 													  </label>
@@ -119,10 +119,10 @@ require_once("function.php");
 											$stmt = $db->prepare("INSERT INTO articles (journalist,limited,approvated, title, subtitle, category,article,date,team, imgdir, views) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
 											$stmt->execute([$id,$limited,0,$title,$subtitle,$category,$article,$date,$team,$filename,0]);
 											$idInsert = $db->lastInsertId();
-											echo '<a href="article.php?id='. $idInsert. '"><p>look at the article just written</p></a>';
+											echo '<a href="article.php?id='. $idInsert. '"><p>Look at the article just written</p></a>';
 									}
 									else{
-											echo '<h2 class="title is-3 " style="text-align:center">It isnt a jpg, png or jpeg file, load in this format</h2>';
+											echo '<h2 class="title is-3 " style="text-align:center">It isn\'t a jpg, png or jpeg file, load it in this format</h2>';
 									}
 								}
 							?>
