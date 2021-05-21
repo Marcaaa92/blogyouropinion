@@ -86,7 +86,7 @@ require_once("function.php");
 								echo'</tbody></table></div>';
 							}
 							else{
-								echo '<h2 class="title is-4 " style="text-align:center">You have not permission to see this page</h2>';
+								echo '<h1 class="title is-4 " style="text-align:center">You have not permission to see this page</h1>';
 							}
 							?>
 						</div>
@@ -112,7 +112,7 @@ require_once("function.php");
 								echo'</tbody></table></div>';
 							}
 							else{
-								echo '<h2 class="title is-4 " style="text-align:center">You have not permission to see this page</h2>';
+								echo '<h1 class="title is-4 " style="text-align:center">You have not permission to see this page</h1>';
 							}
 							?>
 						</div>

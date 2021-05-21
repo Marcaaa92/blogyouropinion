@@ -23,7 +23,7 @@ require_once("function.php");
 							<?php
 							if(!isset($_SESSION["id"])){
 							?>
-							<h2 class="title is-3 " style="text-align:center">Login</h2>
+							<h1 class="title is-3 " style="text-align:center">Login</h1>
 							<form action="" method="post" class="box">
 								<div class="field">
 									<label class="label">Email</label>
@@ -53,7 +53,7 @@ require_once("function.php");
 							<?php
 							}
 							else{
-								echo '<h2 class="title is-3 " style="text-align:center">You are arleady logged in</h2>';
+								echo '<h1 class="title is-3 " style="text-align:center">You are arleady logged in</h1>';
 							}
 							?>
 								<?php
@@ -74,11 +74,11 @@ require_once("function.php");
 															$_SESSION["surname"]=$row['surname'];
 															$_SESSION["role"]=$row['roleName'];
 															$_SESSION["teamId"]=$row['teamId'];
-														echo '<h2 class="title is-3 " style="text-align:center">You are logged in!</h2>';
+														echo '<h1 class="title is-3 " style="text-align:center">You are logged in!</h1>';
 														header("Refresh:1; url=index.php");
 													}
 													else{
-														echo '<h2 class="title is-3 " style="text-align:center">Password or mail incorrect</h2>';
+														echo '<h1 class="title is-3 " style="text-align:center">Password or mail incorrect</h1>';
 													}
 									}
 								?>

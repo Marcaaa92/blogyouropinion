@@ -39,13 +39,13 @@ require_once("function.php");
 							$id = $decoded_data["id"];
 							$stmt = $db->prepare("UPDATE user SET email = ? WHERE id=?");
 							$r = $stmt->execute([$email,$id]);
-							echo '<h2 class="title is-4" style="text-align:center">Email successfully confirmed</h2>';
+							echo '<h1 class="title is-4" style="text-align:center">Email successfully confirmed</h1>';
 							} catch (Exception $e) {
 								if($e->getMessage()=="Expired token"){
-									echo '<h2 class="title is-3 " style="text-align:center">Time expired</h2>';
+									echo '<h1 class="title is-3 " style="text-align:center">Time expired</h1>';
 								}
 								else{
-										echo '<h2 class="title is-3 " style="text-align:center">Token manumited or not valid</h2>';
+										echo '<h1 class="title is-3 " style="text-align:center">Token manumited or not valid</h1>';
 								}
 							}
 						?>

@@ -62,18 +62,18 @@ require_once("function.php");
 									}
 									else
 									{
-										echo '<h2 class="title is-3 " style="text-align:center">Cannot read this article or it has not been approved yet</h2>';
+										echo '<h1 class="title is-5 " style="text-align:center">Cannot read this article or it has not been approved yet</h1>';
 									}
 								}
 							}
 							else
 							{
-								echo '<h2 class="title is-3 " style="text-align:center">Article not found</h2>';
+								echo '<h1 class="title is-5 " style="text-align:center">Article not found</h1>';
 							}
 						}
 						else
 						{
-							echo '<h2 class="title is-3 " style="text-align:center">You have not requested any articles.</h2>';
+							echo '<h1 class="title is-5 " style="text-align:center">You have not requested any articles.</h1>';
 						}
 						?>
 	</body>

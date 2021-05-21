@@ -23,7 +23,7 @@ require_once("function.php");
 						<?php
 							if(!isset($_SESSION["id"])){
 						?>
-						<h2 class="title is-3 " style="text-align:center">Sign up</h2>
+						<h1 class="title is-3 " style="text-align:center">Sign up</h1>
 							<form action="" method="post" class="box">
 								<div class="field">
 								  <label class="label">Name</label>
@@ -99,7 +99,7 @@ require_once("function.php");
 							<?php
 							}
 							else{
-								echo '<h2 class="title is-3 " style="text-align:center">You are arleady logged in</h2>';
+								echo '<h1 class="title is-3 " style="text-align:center">You are arleady logged in</h1>';
 							}
 							?>
 							<?php
@@ -119,7 +119,7 @@ require_once("function.php");
 									$password2=$_POST["password2"];
 									echo $mail;
 									if($password1!=$password2){
-										echo '<h2 class="title is-3 " style="text-align:center">Passwords do not match</h2>';
+										echo '<h1 class="title is-3 " style="text-align:center">Passwords do not match</h1>';
 									}
 									else{
 											$stmt = $db->prepare("SELECT nickname FROM user WHERE nickname = ?");
@@ -146,19 +146,19 @@ require_once("function.php");
 													  );
 													$jwt = JWT::encode($token, $key);
 													 sendMail($email, 'Email confirm - BlogYourOpinion', "Hey $name confirm your email following this link https://blogyouropinion.ddns.net/register_confirm.php?id=$jwt");
-														echo '<h2 class="title is-4 " style="text-align:center">Check your email inbox to confirm your email</h2>';
+														echo '<h1 class="title is-4 " style="text-align:center">Check your email inbox to confirm your email</h1>';
 												  }
 												  else{
-													echo '<h2 class="title is-3 " style="text-align:center">Email arleady taken</h2>';
+													echo '<h1 class="title is-3 " style="text-align:center">Email arleady taken</h1>';
 												  }
 											}
 											else{
-												echo '<h2 class="title is-3 " style="text-align:center">Nickname arleady taken</h2>';
+												echo '<h1 class="title is-3 " style="text-align:center">Nickname arleady taken</h1>';
 											}
 									}
 								}
 								else{
-									echo '<h2 class="title is-3 " style="text-align:center">Missing fields, check if all fields are filled</h2>';
+									echo '<h1 class="title is-3 " style="text-align:center">Missing fields, check if all fields are filled</h1>';
 								}
 							}
 							?>

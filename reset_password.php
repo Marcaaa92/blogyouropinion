@@ -30,7 +30,7 @@ require_once 'jwt/src/JWT.php';
 								if(isset($_GET["action"])){
 									if($_GET["action"]=="email"){
 							?>
-							<h2 class="title is-3 " style="text-align:center">Reset password form</h2>
+							<h1 class="title is-3 " style="text-align:center">Reset password form</h1>
 							<form action="" method="post" class="box">
 								<div class="field">
 									<label class="label">Email</label>
@@ -65,7 +65,7 @@ require_once 'jwt/src/JWT.php';
 													$stmt->execute([$email]);
 												  if ($stmt->rowCount() == 1){
 													 echo '
-														<h2 class="title is-3 " style="text-align:center">Reset password form</h2>
+														<h1 class="title is-3 " style="text-align:center">Reset password form</h1>
 														<form action="" method="post" class="box">
 															<div class="field">
 																<label class="label">New password</label>
@@ -94,31 +94,31 @@ require_once 'jwt/src/JWT.php';
 														</form>';
 												  }
 												  else{
-														echo '<h2 class="title is-3 " style="text-align:center">Something went wrong</h2>';
+														echo '<h1 class="title is-3 " style="text-align:center">Something went wrong</h1>';
 												  }
 												} catch (Exception $e) {
 													if($e->getMessage()=="Expired token"){
-														echo '<h2 class="title is-3 " style="text-align:center">Time expired</h2>';
+														echo '<h1 class="title is-3 " style="text-align:center">Time expired</h1>';
 													}
 													else{
-															echo '<h2 class="title is-3 " style="text-align:center">Token manumited or not valid</h2>';
+															echo '<h1 class="title is-3 " style="text-align:center">Token manumited or not valid</h1>';
 													}
 												}
 										}
 										else{
-											echo '<h2 class="title is-3 " style="text-align:center">No token sended</h2>';
+											echo '<h1 class="title is-3 " style="text-align:center">No token sended</h1>';
 										}
 									}
 									else{
-										echo '<h2 class="title is-3 " style="text-align:center">Wrong action</h2>';
+										echo '<h1 class="title is-3 " style="text-align:center">Wrong action</h1>';
 									}
 								}
 								else{
-									echo '<h2 class="title is-3 " style="text-align:center">No action selected</h2>';
+									echo '<h1 class="title is-3 " style="text-align:center">No action selected</h1>';
 								}
 							}
 							else{
-								echo '<h2 class="title is-3 " style="text-align:center">You are arleady logged in</h2>';
+								echo '<h1 class="title is-3 " style="text-align:center">You are arleady logged in</h1>';
 							}
 							?>
 							<?php
@@ -140,10 +140,10 @@ require_once 'jwt/src/JWT.php';
 										);
 										$jwt = JWT::encode($token, $key);
 										sendMail($email, 'Edit password - BlogYourOpinion', "Hey $name confirm your action to edit password following this link https://blogyouropinion.ddns.net/reset_password.php?action=setPassword&id=$jwt, if you have not requested a change of password, ignore this mail");
-										echo '<h2 class="title is-3 " style="text-align:center">Check your email inbox to confirm your email</h2>';
+										echo '<h1 class="title is-3 " style="text-align:center">Check your email inbox to confirm your email</h1>';
 									}
 									else{
-										echo '<h2 class="title is-3 " style="text-align:center">No account associated</h2>';
+										echo '<h1 class="title is-3 " style="text-align:center">No account associated</h1>';
 									}
 								}
 								else if($_POST["reset"]=="setPassword"){
@@ -154,7 +154,7 @@ require_once 'jwt/src/JWT.php';
                     header("Refresh:1; url=login_page.php");
 									}
 									else{
-										echo '<h2 class="title is-3 " style="text-align:center">Password doesnt match</h2>';
+										echo '<h1 class="title is-3 " style="text-align:center">Password doesnt match</h1>';
 									}
 								}
 							}

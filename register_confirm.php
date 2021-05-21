@@ -44,19 +44,19 @@
 							$stmt = $db->prepare("SELECT nickname,email FROM user WHERE nickname = ? OR email=?");
 							$stmt->execute([$nickname, $email]);
 						  if ($stmt->rowCount() == 1){
-							  echo '<h2 class="title is-4 " style="text-align:center">Email already confirmed</h2>';
+							  echo '<h1 class="title is-4 " style="text-align:center">Email already confirmed</h1>';
 						  }
 						  else{
 								$stmt = $db->prepare("INSERT INTO user (nickname,name,surname,email,password,subscribed,role,team) VALUES (?,?,?,?,?,?,?,?)");
 								$r = $stmt->execute([$nickname,$name,$surname,$email,$password,$date,1,$team]);
-							echo '<h2 class="title is-4" style="text-align:center">Email confirmed successfully</h2>';
+							echo '<h1 class="title is-4" style="text-align:center">Email confirmed successfully</h1>';
 						  }
 						} catch (Exception $e) {
 							if($e->getMessage()=="Expired token"){
-								echo '<h2 class="title is-3 " style="text-align:center">Time expired</h2>';
+								echo '<h1 class="title is-3 " style="text-align:center">Time expired</h1>';
 							}
 							else{
-									echo '<h2 class="title is-3 " style="text-align:center">Token manumited or not valid</h2>';
+									echo '<h1 class="title is-3 " style="text-align:center">Token manumited or not valid</h1>';
 							}
 						}
 				?>

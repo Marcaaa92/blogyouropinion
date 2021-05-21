@@ -26,7 +26,7 @@ require_once("function.php");
 								$row = $stmt->fetch();
 								$teamName=$row["teamName"];
 								$teamLogo=$row["logo"];
-								echo '<h2 class="title is-3 " style="text-align:center"><img style="width:60px" src="'.$teamLogo.'">'.$teamName.'<img style="width:60px" src="'.$teamLogo.'"></h2>';
+								echo '<h1 class="title is-3 " style="text-align:center"><img style="width:60px" src="'.$teamLogo.'">'.$teamName.'<img style="width:60px" src="'.$teamLogo.'"></h1>';
 								if($_GET["action"]=="article"&&isset($_GET["id"])){
 									echo'
 									<div class="tabs is-centered">
@@ -145,11 +145,11 @@ require_once("function.php");
 										$stmt = $db->prepare("INSERT INTO playersbyteam(timestamp,response,teamId) VALUES (?,?,?)");
 										$stmt->execute([$timestamp,json_encode($response),$id]);
 									}
-									echo '<h2 class="title is-3 " style="text-align:center">Here are the players who have played at least one match in Serie A</h2>';
+									echo '<h1 class="title is-3 " style="text-align:center">Here are the players who have played at least one match in Serie A</h1>';
 									echo '<div id="table_div" class="table"></div>';
 								}
 								else{
-									echo '<h2 class="title is-3 " style="text-align:center">You have no selectet any action or team name</h2>';
+									echo '<h1 class="title is-3 " style="text-align:center">You have no selectet any action or team name</h1>';
 								}
 							?>
 				</div>

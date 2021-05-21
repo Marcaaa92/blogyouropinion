@@ -28,7 +28,7 @@ require_once("function.php");
 						use \Firebase\JWT\JWT;
 						if(isset($_SESSION["id"])){
 							$id=$_SESSION["id"];
-							echo '<h2 class="title is-4">Your actual info</h2>';
+							echo '<h1 class="title is-4">Your actual info</h1>';
 								$stmt = $db->prepare("SELECT user.name, user.surname, user.nickname, user.email, user.subscribed, role.roleName, team.teamName, user.telegramId FROM user JOIN role ON role.id=user.role JOIN team ON team.id=user.team WHERE user.id = ?");
 								$stmt->execute([$id]);
 								while ($row = $stmt->fetch()) {
@@ -74,7 +74,7 @@ require_once("function.php");
 							if(isset($_GET["action"])){
 								if($_GET["action"]=="nickname"){
 									echo '
-										<h2 class="title is-4">Nickname edit form</h2>
+										<h1 class="title is-4">Nickname edit form</h1>
 										<form action="" method="post" class="box">
 											<div class="field">
 												<label class="label">Nickname</label>
@@ -97,7 +97,7 @@ require_once("function.php");
 								}
 								else if($_GET["action"]=="email"){
 										echo '
-										<h2 class="title is-4">Edit mail form</h2>
+										<h1 class="title is-4">Edit mail form</h1>
 										<form action="" method="post" class="box">
 											<div class="field">
 												<label class="label">Email</label>
@@ -120,7 +120,7 @@ require_once("function.php");
 								}
 								else if($_GET["action"]=="password"){
 										echo '
-										<h2 class="title is-4">Edit password form</h2>
+										<h1 class="title is-4">Edit password form</h1>
 										<form action="" method="post" class="box">
 											<div class="field">
 												<label class="label">Old password</label>
@@ -150,7 +150,7 @@ require_once("function.php");
 								}
 								else if($_GET["action"]=="delete"){
 									echo '
-										<h2 class="title is-4">Delete profile form</h2>
+										<h1 class="title is-4">Delete profile form</h1>
 										<form action="" method="post" class="box">
 											<div class="field">
 												<label class="label">Password</label>
@@ -172,7 +172,7 @@ require_once("function.php");
 								}
 								else if($_GET["action"]=="edit-team"){
 									echo '
-										<h2 class="title is-4">Select your favourite team</h2>
+										<h1 class="title is-4">Select your favourite team</h1>
 										<form action="" method="post" class="box">
 											<div class="select">
 												<select name="team">';
@@ -194,11 +194,11 @@ require_once("function.php");
 								}
 							}
 							else{
-								echo '<h2 class="title is-4 " style="text-align:center">You have not selected any action for your account</h2>';
+								echo '<h1 class="title is-4 " style="text-align:center">You have not selected any action for your account</h1>';
 							}
 						}
 						else{
-							echo '<h2 class="title is-4 " style="text-align:center">You cant edit your profile if your are not logged in</h2>';
+							echo '<h1 class="title is-4 " style="text-align:center">You cant edit your profile if your are not logged in</h1>';
 						}
 						?>
 						<?php
@@ -216,14 +216,14 @@ require_once("function.php");
 												$stmt = $db->prepare("UPDATE user SET nickname = ? WHERE id=?");
 												$stmt->execute([$nickname, $id]);
 												$_SESSION["nickname"]=$nickname;
-												echo '<h2 class="title is-4 " style="text-align:center">Edit successful</h2>';
+												echo '<h1 class="title is-4 " style="text-align:center">Edit successful</h1>';
 											}
 											else{
-												echo '<h2 class="title is-4 " style="text-align:center">Wrong password, type it again</h2>';
+												echo '<h1 class="title is-4 " style="text-align:center">Wrong password, type it again</h1>';
 											}
 										}
 										else{
-												echo '<h2 class="title is-4 " style="text-align:center">Nickname arleady taken</h2>';
+												echo '<h1 class="title is-4 " style="text-align:center">Nickname arleady taken</h1>';
 										}
 								}
 								else if($_POST["submit"]=="editpassword"){
@@ -236,20 +236,20 @@ require_once("function.php");
 											$stmt->execute([$id, $passwordold]);
 											if ($stmt->rowCount() == 1) {
 												if($password2==$passwordold){
-													echo '<h2 class="title is-4 " style="text-align:center">You entered the same password like the last one</h2>';
+													echo '<h1 class="title is-4 " style="text-align:center">You entered the same password like the last one</h1>';
 												}
 												else{
 													$stmt = $db->prepare("UPDATE user SET password = ? WHERE id=?");
 													$stmt->execute([hash('sha512',$password2), $id]);
-													echo '<h2 class="title is-4 " style="text-align:center">Edit successful</h2>';
+													echo '<h1 class="title is-4 " style="text-align:center">Edit successful</h1>';
 												}
 											}
 											else{
-												echo '<h2 class="title is-4 " style="text-align:center">Wrong password, type it again</h2>';
+												echo '<h1 class="title is-4 " style="text-align:center">Wrong password, type it again</h1>';
 											}
 									}
 									else{
-										echo '<h2 class="title is-4 " style="text-align:center">Passwords do not match</h2>';
+										echo '<h1 class="title is-4 " style="text-align:center">Passwords do not match</h1>';
 									}
 								}
 								else if($_POST["submit"]=="delete"){
@@ -265,7 +265,7 @@ require_once("function.php");
 											header("location: ./index.php");
 										}
 										else{
-											echo '<h2 class="title is-4 " style="text-align:center">Wrong password, type it again</h2>';
+											echo '<h1 class="title is-4 " style="text-align:center">Wrong password, type it again</h1>';
 										}
 								}
 								else if($_POST["submit"]=="editmail"){
@@ -295,14 +295,14 @@ require_once("function.php");
 
 
 																sendMail($email, 'Email confirm - BlogYourOpinion',"Hey $name verifiy your email with the following link https://blogyouropinion.ddns.net/edit_mail_confirm.php?id=$jwt");
-																echo '<h2 class="title is-4 " style="text-align:center">Check your email inbox to confirm your email</h2>';
+																echo '<h1 class="title is-4 " style="text-align:center">Check your email inbox to confirm your email</h1>';
 												}
 												else{
-													echo '<h2 class="title is-4 " style="text-align:center">Wrong password, type it again</h2>';
+													echo '<h1 class="title is-4 " style="text-align:center">Wrong password, type it again</h1>';
 												}
 											}
 											else{
-												echo '<h2 class="title is-4 " style="text-align:center">Email arleady taken</h2>';
+												echo '<h1 class="title is-4 " style="text-align:center">Email arleady taken</h1>';
 											}
 								}
 								else if($_POST["submit"]=="team"){
@@ -311,7 +311,7 @@ require_once("function.php");
 									$_SESSION["teamId"]=$team;
 													$stmt = $db->prepare("UPDATE user SET team = ? WHERE id=?");
 													$stmt->execute([$team, $id]);
-													echo '<h2 class="title is-4 " style="text-align:center">Edit successfullly</h2>';
+													echo '<h1 class="title is-4 " style="text-align:center">Edit successfullly</h1>';
 
 								}
 							}
