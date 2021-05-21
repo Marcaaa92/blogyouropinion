@@ -42,11 +42,12 @@ require_once("function.php");
 
 											$jwt = JWT::encode($token, $key);
 											echo'
+                      <div class="box">
 											<div class="columns is-desktop" style="text-aling:center">
 												<div class="column is-full-mobile is-full-tablet is-full-third-desktop is-half-widescreen is-half-fullhd">
 													<strong>Name: </strong>'.$row["name"].'</br>
 													<strong>Email: </strong>'.$row["email"].'</br>
-													<strong>Subscribed at: </strong>'.$row["subscribed"].'</br>
+													<strong>Registred on: </strong>'.$row["subscribed"].'</br>
 													<strong>Role in the blog: </strong>'.$row["roleName"].'</br>
 												</div>
 												<div class="column is-full-mobile is-full-tablet is-full-third-desktop is-half-widescreen is-half-fullhd">
@@ -54,18 +55,19 @@ require_once("function.php");
 													<strong>Nickname: </strong>'.$row["nickname"].'</br>
 													<strong>Followed team: </strong>'.$row["teamName"].'</br>';
                           if($row["telegramId"]!=NULL){
-                            echo '<strong>Link with telegram: </strong> Yes</br>';
+                            echo '<strong>Connection with telegram: </strong> Yes</br>';
                           }
                           else{
-                            echo '<strong>Link with telegram: </strong> No</br>';
+                            echo '<strong>Connection with telegram: </strong> No</br>';
                           }
 												echo '</div>
 											</div>
 											<div class="columns is-desktop">
-												<div class="column is-full-mobile is-full-tablet is-full-third-desktop is-full-widescreen is-full-fullhd">
+												<div class="column is-full-mobile is-full-tablet is-full-third-desktop is-full-widescreen is-full-fullhd" style="word-wrap: break-word;">
 													<strong>User token: </strong></br>'.$jwt.'
 												</div>
 											</div>
+                    </div>
 											';
 								}
 							echo "<br>";
