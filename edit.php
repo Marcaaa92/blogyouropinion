@@ -29,7 +29,7 @@ require_once("function.php");
 						if(isset($_SESSION["id"])){
 							$id=$_SESSION["id"];
 							echo '<h2 class="title is-4">Your actual info</h2>';
-								$stmt = $db->prepare("SELECT user.name, user.surname, user.nickname, user.email, user.subscribed, role.roleName, team.teamName FROM user JOIN role ON role.id=user.role JOIN team ON team.id=user.team WHERE user.id = ?");
+								$stmt = $db->prepare("SELECT user.name, user.surname, user.nickname, user.email, user.subscribed, role.roleName, team.teamName, user.telegramId FROM user JOIN role ON role.id=user.role JOIN team ON team.id=user.team WHERE user.id = ?");
 								$stmt->execute([$id]);
 								while ($row = $stmt->fetch()) {
 									$key = "zlatan";
@@ -52,8 +52,14 @@ require_once("function.php");
 												<div class="column is-full-mobile is-full-tablet is-full-third-desktop is-half-widescreen is-half-fullhd">
 													<strong>Surname: </strong>'.$row["surname"].'</br>
 													<strong>Nickname: </strong>'.$row["nickname"].'</br>
-													<strong>Followed team: </strong>'.$row["teamName"].'</br>
-												</div>
+													<strong>Followed team: </strong>'.$row["teamName"].'</br>';
+                          if($row["telegramId"]!=NULL){
+                            echo '<strong>Link with telegram: </strong> Yes</br>';
+                          }
+                          else{
+                            echo '<strong>Link with telegram: </strong> No</br>';
+                          }
+												echo '</div>
 											</div>
 											<div class="columns is-desktop">
 												<div class="column is-full-mobile is-full-tablet is-full-third-desktop is-full-widescreen is-full-fullhd">
