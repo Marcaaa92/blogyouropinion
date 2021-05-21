@@ -20,34 +20,34 @@ else if(substr($message, 0, 4)=="/set"){
   $token=substr($message, 5, strlen($message));
   $key = "zlatan";
 
-  try{
-    $jwt = $token;
-    $decoded = JWT::decode($jwt, $key, array('HS256'));
-    $decoded_array = (array) $decoded;
-    JWT::$leeway = 60;
+  $stmt = $db->prepare("SELECT telegramId FROM user WHERE telegramId=?");
+  $stmt->execute([$id]);
+  if ($stmt->rowCount() == 0) {
+    try{
+      $jwt = $token;
+      $decoded = JWT::decode($jwt, $key, array('HS256'));
+      $decoded_array = (array) $decoded;
+      JWT::$leeway = 60;
 
-    $decoded_data = (array) $decoded_array["data"];
-    $tokenid = $decoded_data["id"];
-    $stmt = $db->prepare("SELECT telegramId FROM user WHERE telegramId=?");
-    $stmt->execute([$id]);
-    if ($stmt->rowCount() == 0) {
-        $stmt = $db->prepare("SELECT id FROM user WHERE id=? AND telegramId IS NOT NULL");
-        $stmt->execute([$tokenid]);
-        if ($stmt->rowCount() == 0) {
-          $stmt = $db->prepare("UPDATE user SET telegramId = ? WHERE id=?");
-          $r = $stmt->execute([$id,$tokenid]);
-          sendMessage($id,"Newsletter setted");
+      $decoded_data = (array) $decoded_array["data"];
+      $tokenid = $decoded_data["id"];
+          $stmt = $db->prepare("SELECT id FROM user WHERE id=? AND telegramId IS NOT NULL");
+          $stmt->execute([$tokenid]);
+          if ($stmt->rowCount() == 0) {
+            $stmt = $db->prepare("UPDATE user SET telegramId = ? WHERE id=?");
+            $r = $stmt->execute([$id,$tokenid]);
+            sendMessage($id,"Newsletter setted");
+          }
+          else{
+            sendMessage($id,"You have arleady set the newsletter");
+          }
         }
-        else{
-          sendMessage($id,"You have arleady set the newsletter");
-        }
-      }
-      else{
-          sendMessage($id,"You have arleady register something with this account");
-      }
+    catch (Exception $e) {
+        sendMessage($id,"Token manumitted");
     }
-  catch (Exception $e) {
-      sendMessage($id,"Token manumitted");
+  }
+  else{
+    sendMessage($id,"You have arleady registred this telegram account");
   }
 }
 else{
