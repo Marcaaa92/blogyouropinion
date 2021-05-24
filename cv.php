@@ -31,11 +31,11 @@ require_once("function.php");
 									readfile($cv);
 								}
 								else{
-									echo '<h1 class="title is-3 " style="text-align:center">You have not permission to see this content</h1>';
+									echo '<h1 class="title is-4 " style="text-align:center">You have not permission to see this content</h1>';
 								}
 							}
 							else{
-									echo '<h1 class="title is-3 " style="text-align:center">You have not permission to see this content</h1>';
+									echo '<h1 class="title is-4 " style="text-align:center">You have not permission to see this content</h1>';
 								}
 						?>
 				</div>

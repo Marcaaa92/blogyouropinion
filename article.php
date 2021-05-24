@@ -16,6 +16,9 @@ require_once("function.php");
 		<?php
 		loadNav();
 		?>
+    <section class="section is-four-fifth">
+      <div class="columns is-desktop">
+        <div class="column">
 						<?php
 						if (isset($_GET["id"]))
 						{
@@ -60,15 +63,19 @@ require_once("function.php");
                     $stmt = $db->prepare("UPDATE articles SET views = views + 1 WHERE id = ?");
                     $stmt->execute([$idArticle]);
 									}
-									else
+                  else if($row["approvated"] == 0)
+                  {
+                    echo '<h1 class="title is-4 " style="text-align:center">This article has not be approved yet</h1>';
+                  }
+									else if($row["limited"] == 1)
 									{
-										echo '<h1 class="title is-5 " style="text-align:center">Cannot read this article or it has not been approved yet</h1>';
+										echo '<h1 class="title is-4 " style="text-align:center">You must log in to read this article</h1>';
 									}
 								}
 							}
 							else
 							{
-								echo '<h1 class="title is-5 " style="text-align:center">Article not found</h1>';
+								echo '<h1 class="title is-4 " style="text-align:center">Article not found</h1>';
 							}
 						}
 						else
@@ -76,5 +83,8 @@ require_once("function.php");
 							echo '<h1 class="title is-5 " style="text-align:center">You have not requested any articles.</h1>';
 						}
 						?>
+          </div>
+        </div>
+      </section>
 	</body>
 </html>

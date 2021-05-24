@@ -119,7 +119,7 @@ require_once("function.php");
 									$password2=$_POST["password2"];
 									echo $mail;
 									if($password1!=$password2){
-										echo '<h1 class="title is-3 " style="text-align:center">Passwords do not match</h1>';
+										echo '<h1 class="title is-4 " style="text-align:center">Passwords do not match</h1>';
 									}
 									else{
 											$stmt = $db->prepare("SELECT nickname FROM user WHERE nickname = ?");
@@ -149,16 +149,16 @@ require_once("function.php");
 														echo '<h1 class="title is-4 " style="text-align:center">Check your email inbox to confirm your email</h1>';
 												  }
 												  else{
-													echo '<h1 class="title is-3 " style="text-align:center">Email arleady taken</h1>';
+													echo '<h1 class="title is-4 " style="text-align:center">Email arleady taken</h1>';
 												  }
 											}
 											else{
-												echo '<h1 class="title is-3 " style="text-align:center">Nickname arleady taken</h1>';
+												echo '<h1 class="title is-4 " style="text-align:center">Nickname arleady taken</h1>';
 											}
 									}
 								}
 								else{
-									echo '<h1 class="title is-3 " style="text-align:center">Missing fields, check if all fields are filled</h1>';
+									echo '<h1 class="title is-4 " style="text-align:center">Missing fields, check if all fields are filled</h1>';
 								}
 							}
 							?>
@@ -167,28 +167,6 @@ require_once("function.php");
 				</div>
 		</section>
 	</body>
-	<script>
-	function checkpw() {
-	  var pw1 = document.getElementById("pw1").value;
-	  var pw2 = document.getElementById("pw2").value;
-	  if(pw1!=pw2){
-	  	document.getElementById("check-text-pw").innerHTML = "The password doesn't match";
-			document.getElementById("register").disabled = true;
-		}
-	  else{
-			var valore=document.getElementById("pw1").value;
-			var verifica=/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&?\."]).*$/;
-			if(valore.match(verifica)){
-				document.getElementById("check-text-pw").innerHTML = "";
-				document.getElementById("register").disabled = false;
-			}
-			else
-			{
-				document.getElementById("check-text-pw").innerHTML = "The password must contain more than 8 characters, downcase,uppercase letters,number and a characters like: '! # $ % & ? .'";
-				document.getElementById("register").disabled = true;
-			}
-		}
-	}
-	</script>
+  <script src="function.js"></script>
 <script src="https://kit.fontawesome.com/ee36c308c7.js" crossorigin="anonymous"></script>
 </html>

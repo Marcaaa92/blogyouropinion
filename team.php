@@ -149,7 +149,7 @@ require_once("function.php");
 									echo '<div id="table_div" class="table"></div>';
 								}
 								else{
-									echo '<h1 class="title is-3 " style="text-align:center">You have no selectet any action or team name</h1>';
+									echo '<h1 class="title is-4 " style="text-align:center">You have no selectet any action or team name</h1>';
 								}
 							?>
 				</div>

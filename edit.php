@@ -78,15 +78,21 @@ require_once("function.php");
 										<form action="" method="post" class="box">
 											<div class="field">
 												<label class="label">Nickname</label>
-												<div class="control">
+												<div class="control has-icons-left">
 													<input class="input" type="nickname" name="nickname" placeholder="Insert new nickname" minlength="2" maxlength="20" required>
-												</div>
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                          </span>
+                        </div>
 											</div>
 											<div class="field">
 												<label class="label">Password</label>
-												<div class="control">
+												<div class="control has-icons-left">
 													<input class="input" type="password" name="password" placeholder="Insert your password to confirm this action" required>
-												</div>
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                          </span>
+                        </div>
 											</div>
 											<div class="field is-grouped">
 												<div class="control">
@@ -101,15 +107,21 @@ require_once("function.php");
 										<form action="" method="post" class="box">
 											<div class="field">
 												<label class="label">Email</label>
-												<div class="control">
+												<div class="control has-icons-left">
 													<input class="input" type="email" name="email" placeholder="Insert Mail" minlength="6" maxlength="60" required>
-												</div>
+                          <span class="icon is-small is-left">
+                              <i class="fas fa-envelope"></i>
+                          </span>
+                        </div>
 											</div>
 											<div class="field">
 												<label class="label">Password</label>
-												<div class="control">
+												<div class="control has-icons-left">
 													<input class="input" type="password" name="password" placeholder="Insert your password to confirm this action" required>
-												</div>
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                          </span>
+                        </div>
 											</div>
 											<div class="field is-grouped">
 												<div class="control">
@@ -124,21 +136,30 @@ require_once("function.php");
 										<form action="" method="post" class="box">
 											<div class="field">
 												<label class="label">Old password</label>
-												<div class="control">
+												<div class="control has-icons-left">
 													<input class="input" type="password" name="passwordold" placeholder="Insert your old password to confirm this action" required>
-												</div>
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                          </span>
+                        </div>
 											</div>
 											<div class="field">
 												<label class="label">New password</label>
-												<div class="control">
+												<div class="control has-icons-left">
 													<input class="input" type="password" name="password1" id="pw1" oninput="checkpw()" placeholder="Insert your new password" minlength="6" maxlength="20" required>
-												</div>
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                          </span>
+                        </div>
 											</div>
 											<div class="field">
 												<label class="label">Re-insert new Password</label>
-												<div class="control">
+												<div class="control has-icons-left">
 													<input class="input" type="password" name="password2" id="pw2" oninput="checkpw()" placeholder="Re-insert your new password" minlength="6" maxlength="20" required>
-												</div>
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                          </span>
+                        </div>
 												<p class="label" id="check-text-pw"></p>
 											</div>
 											<div class="field is-grouped">
@@ -154,9 +175,12 @@ require_once("function.php");
 										<form action="" method="post" class="box">
 											<div class="field">
 												<label class="label">Password</label>
-												<div class="control">
+												<div class="control has-icons-left">
 													<input class="input" type="password" name="password" placeholder="Insert your password to confirm this action" required>
-												</div>
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                          </span>
+                        </div>
 											</div>
 												<label class="radio">
 												  <input type="checkbox" name="sure" required>
@@ -321,15 +345,6 @@ require_once("function.php");
 				</div>
 		</section>
 	</body>
-	<script>
-	function checkpw()
-	{
-	  var pw1 = document.getElementById("pw1").value;
-	  var pw2 = document.getElementById("pw2").value;
-	  if(pw1!=pw2)
-	  document.getElementById("check-text-pw").innerHTML = "Passwords do not match";
-	  else
-	  document.getElementById("check-text-pw").innerHTML = "";
-	}
-	</script>
+  <script src="https://kit.fontawesome.com/ee36c308c7.js" crossorigin="anonymous"></script>
+  <script src="function.js"></script>
 </html>

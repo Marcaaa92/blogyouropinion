@@ -1,4 +1,4 @@
-<?php
+title is-4<?php
 use \Firebase\JWT\JWT;
 session_start();
 require_once("function.php");
@@ -94,31 +94,31 @@ require_once 'jwt/src/JWT.php';
 														</form>';
 												  }
 												  else{
-														echo '<h1 class="title is-3 " style="text-align:center">Something went wrong</h1>';
+														echo '<h1 class="title is-4 " style="text-align:center">Something went wrong</h1>';
 												  }
 												} catch (Exception $e) {
 													if($e->getMessage()=="Expired token"){
-														echo '<h1 class="title is-3 " style="text-align:center">Time expired</h1>';
+														echo '<h1 class="title is-4 " style="text-align:center">Time expired</h1>';
 													}
 													else{
-															echo '<h1 class="title is-3 " style="text-align:center">Token manumited or not valid</h1>';
+															echo '<h1 class="title is-4 " style="text-align:center">Token manumited or not valid</h1>';
 													}
 												}
 										}
 										else{
-											echo '<h1 class="title is-3 " style="text-align:center">No token sended</h1>';
+											echo '<h1 class="title is-4 " style="text-align:center">No token sended</h1>';
 										}
 									}
 									else{
-										echo '<h1 class="title is-3 " style="text-align:center">Wrong action</h1>';
+										echo '<h1 class="title is-4 " style="text-align:center">Wrong action</h1>';
 									}
 								}
 								else{
-									echo '<h1 class="title is-3 " style="text-align:center">No action selected</h1>';
+									echo '<h1 class="title is-4 " style="text-align:center">No action selected</h1>';
 								}
 							}
 							else{
-								echo '<h1 class="title is-3 " style="text-align:center">You are arleady logged in</h1>';
+								echo '<h1 class="title is-4 " style="text-align:center">You are arleady logged in</h1>';
 							}
 							?>
 							<?php
@@ -140,10 +140,10 @@ require_once 'jwt/src/JWT.php';
 										);
 										$jwt = JWT::encode($token, $key);
 										sendMail($email, 'Edit password - BlogYourOpinion', "Hey $name confirm your action to edit password following this link https://blogyouropinion.ddns.net/reset_password.php?action=setPassword&id=$jwt, if you have not requested a change of password, ignore this mail");
-										echo '<h1 class="title is-3 " style="text-align:center">Check your email inbox to confirm your email</h1>';
+										echo '<h1 class="title is-4 " style="text-align:center">Check your email inbox to confirm your email</h1>';
 									}
 									else{
-										echo '<h1 class="title is-3 " style="text-align:center">No account associated</h1>';
+										echo '<h1 class="title is- " style="text-align:center">No account associated</h1>';
 									}
 								}
 								else if($_POST["reset"]=="setPassword"){
@@ -164,28 +164,6 @@ require_once 'jwt/src/JWT.php';
         </div>
 		</section>
 	</body>
-	<script>
-	function checkpw() {
-	  var pw1 = document.getElementById("pw1").value;
-	  var pw2 = document.getElementById("pw2").value;
-	  if(pw1!=pw2){
-	  	document.getElementById("check-text-pw").innerHTML = "Le password non coincidono";
-			document.getElementById("register").disabled = true;
-		}
-	  else{
-			var valore=document.getElementById("pw1").value;
-			var verifica=/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&?\."]).*$/;
-			if(valore.match(verifica)){
-				document.getElementById("check-text-pw").innerHTML = "";
-				document.getElementById("register").disabled = false;
-			}
-			else
-			{
-				document.getElementById("check-text-pw").innerHTML = "The password must contain more than 8 characters, downcase,uppercase letters,number and a characters like: '! # $ % & ? .'";
-				document.getElementById("register").disabled = true;
-			}
-		}
-	}
-	</script>
+  <script src="function.js"></script>
   <script src="https://kit.fontawesome.com/ee36c308c7.js" crossorigin="anonymous"></script>
 </html>

@@ -20,10 +20,10 @@ require_once("function.php");
 		<section class="section is-four-fifth">
 			<div class="columns is-desktop">
 				<div class="column">
-					<h1 class="title is-3 " style="text-align:center">Article publish form</h1>
 							<?php
 								if($_SESSION["role"]=="journalist"||$_SESSION["role"]=="redactor"){
 									echo'
+                  <h1 class="title is-3 " style="text-align:center">Article publish form</h1>
 										<form action="" method="post" enctype="multipart/form-data" class="box">
 													<div class="field">
 													  <label class="label">Title</label>
@@ -89,7 +89,7 @@ require_once("function.php");
 												</form>';
 								}
 								else{
-									echo '<h1 class="title is-3 " style="text-align:center">You have not permission to create articles</h1>';
+									echo '<h1 class="title is-4 " style="text-align:center">You have not permission to create articles</h1>';
 								}
 
 								if(isset($_POST["send"])){
@@ -122,7 +122,7 @@ require_once("function.php");
 											echo '<a href="article.php?id='. $idInsert. '"><p>Look at the article just written</p></a>';
 									}
 									else{
-											echo '<h1 class="title is-3 " style="text-align:center">It isn\'t a jpg, png or jpeg file, load it in this format</h1>';
+											echo '<h1 class="title is-4 " style="text-align:center">It isn\'t a jpg, png or jpeg file, load it in this format</h1>';
 									}
 								}
 							?>

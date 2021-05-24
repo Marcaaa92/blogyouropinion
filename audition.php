@@ -88,12 +88,12 @@ require_once("function.php");
 									move_uploaded_file($_FILES['cv']['tmp_name'], $filename);
 									$stmt = $db->prepare("INSERT INTO audition (cvDir,shortDescription,userId,status,birthday) VALUES(?,?,?,?,?)");
 									$stmt->execute([$filename, $description, $id, "pending", $birthday]);
-									echo '<h1 class="title is-3 " style="text-align:center">Request sent</h1>';
+									echo '<h1 class="title is-4 " style="text-align:center">Request sent</h1>';
 									header("Refresh:1; url=index.php");
 								}
 								else
 								{
-									echo '<h1 class="title is-3 " style="text-align:center">It isn\'t a pdf file, load a pdf file</h1>';
+									echo '<h1 class="title is-4 " style="text-align:center">It isn\'t a pdf file, load a pdf file</h1>';
 								}
 							}
 							?>

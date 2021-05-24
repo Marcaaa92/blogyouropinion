@@ -59,7 +59,7 @@ require_once("function.php");
 
 							}
 							if($status=="Not Started"){
-								echo "<tr><tr><td></td><td></td><td></td><td><h1 class=\"title is-2\">Game not yet started</h1></td><td></td><td><p></p></td><td></td></tr>";
+								echo "<tr><tr><td></td><td></td><td></td><td><h1 class=\"title is-4\">Game not yet started</h1></td><td></td><td><p></p></td><td></td></tr>";
 							}
 							else{
 

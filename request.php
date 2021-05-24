@@ -54,8 +54,7 @@ require_once("function.php");
 										$stmt->execute([$_GET["id"]]);
 										while($row = $stmt->fetch()){
 											sleep(0.03);
-											sendPhoto($row["telegramId"],$row["imgdir"]);
-											sendMessage($row["telegramId"],"New article pubblished!\n<b>".$row["title"]."</b>\n<i>".$row["subtitle"]."</i>\nLink:"."https://blogyouropinion.ddns.net/article.php?id=". $_GET["id"]);
+											sendPhoto($row["telegramId"],$row["imgdir"],"New article pubblished!\n<b>".$row["title"]."</b>\n<i>".$row["subtitle"]."</i>\nLink:"."https://blogyouropinion.ddns.net/article.php?id=". $_GET["id"]);
 										}
 									}
 								}
