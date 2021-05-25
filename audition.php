@@ -47,13 +47,13 @@ require_once("function.php");
 								 <div class="field is-grouped">
 										<label class="label">Birthday:<br></label>
 										<div class="control">
-											 <input class="input" type="date" name="birthday" placeholder="Insert your birthday" required></input>
+											 <input class="input" type="date" name="birthday" placeholder="Insert your birthday" value="';if(isset($_POST["birthday"])){echo $_POST["birthday"];};echo'" required></input>
 										</div>
 								 </div>
 								 <div class="field">
 										<label class="label">Short description of you and your passion</label>
 										<div class="control">
-											 <textarea class="textarea" type="text" name="description" placeholder="Insert something" minlength="100" maxlength="255" required></textarea>
+											 <textarea class="textarea" type="text" name="description" placeholder="Insert something" minlength="100" maxlength="255" value="';if(isset($_POST["description"])){echo $_POST["description"];};echo'" required></textarea>
 										</div>
 								 </div>
 								 <div class="field is-grouped">

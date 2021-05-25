@@ -28,7 +28,7 @@ require_once("function.php");
 								<div class="field">
 									<label class="label">Email</label>
 									<div class="control has-icons-left">
-										<input class="input" type="email" name="emaillog" placeholder="Insert your email" required>
+										<input class="input" type="email" name="emaillog" id="email" placeholder="Insert your email" value="<?php if(isset($_POST["emaillog"])){echo $_POST["emaillog"];}?>" required>
                     <span class="icon is-small is-left">
                         <i class="fas fa-envelope"></i>
                     </span>
@@ -37,7 +37,7 @@ require_once("function.php");
 								<div class="field">
 									<label class="label">Password</label>
 									<div class="control has-icons-left">
-										<input class="input" type="password" name="passwordlog" placeholder="Insert your password" required>
+										<input class="input" type="password" name="passwordlog" id="password" placeholder="Insert your password" required>
                     <span class="icon is-small is-left">
                       <i class="fas fa-lock"></i>
                     </span>
@@ -78,7 +78,9 @@ require_once("function.php");
 														header("Refresh:1; url=index.php");
 													}
 													else{
-														echo '<h1 class="title is-4 " style="text-align:center">Password or mail incorrect</h1>';
+														echo '<h1 class="title is-4 " style="text-align:center">Password or mail incorrect</h1>
+                            <script>document.getElementById("password").classList.toggle("is-danger")</script>
+                            <script>document.getElementById("email").classList.toggle("is-danger")</script>';
 													}
 									}
 								?>

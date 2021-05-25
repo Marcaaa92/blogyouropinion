@@ -28,21 +28,21 @@ require_once("function.php");
 								<div class="field">
 								  <label class="label">Name</label>
 								  <div class="control">
-									<input class="input" type="text" name="name" placeholder="Insert your name" minlength="2" maxlength="20" required>
+									<input class="input" type="text" name="name" placeholder="Insert your name" minlength="2" maxlength="20" value="<?php if(isset($_POST["name"])){echo $_POST["name"];}?>" required>
 								  </div>
 								</div>
 
 								<div class="field">
 								  <label class="label">Surname</label>
 								  <div class="control">
-									<input class="input" type="text" name="surname" placeholder="Insert your name surname" minlength="2" maxlength="20" required>
+									<input class="input" type="text" name="surname" placeholder="Insert your name surname" minlength="2" maxlength="20" value="<?php if(isset($_POST["surname"])){echo $_POST["surname"];}?>" required>
 								  </div>
 								</div>
 
 								<div class="field">
 								  <label class="label">Nickname</label>
 								  <div class="control has-icons-left">
-									<input class="input" type="text" name="nickname" placeholder="Insert your name nickname" minlength="2" maxlength="20" required>
+									<input class="input" type="text" name="nickname" id="nickname" placeholder="Insert your name nickname" minlength="2" maxlength="20" value="<?php if(isset($_POST["nickname"])){echo $_POST["nickname"];}?>" required>
                   <span class="icon is-small is-left">
                     <i class="fas fa-user"></i>
                   </span>
@@ -52,7 +52,7 @@ require_once("function.php");
 								<div class="field">
 								  <label class="label">Email</label>
 								  <div class="control has-icons-left">
-									<input class="input" type="email" name="email" placeholder="Insert mail" minlength="6" maxlength="60" required>
+									<input class="input" type="email" name="email" id="email" placeholder="Insert mail" minlength="6" maxlength="60" value="<?php if(isset($_POST["email"])){echo $_POST["email"];}?>" required>
                   <span class="icon is-small is-left">
                       <i class="fas fa-envelope"></i>
                   </span>
@@ -92,7 +92,7 @@ require_once("function.php");
 								</div>
 								<div class="field is-grouped">
 								  <div class="control">
-									<button class="button is-link" type="submit" name="register" id="register" value="register">Sign up</button>
+									<button class="button is-link" type="submit" name="register" id="register" value="register" disabled>Sign up</button>
 								  </div>
 								</div>
 							</form>
@@ -145,15 +145,18 @@ require_once("function.php");
 														  )
 													  );
 													$jwt = JWT::encode($token, $key);
+
 													 sendMail($email, 'Email confirm - BlogYourOpinion', "Hey $name confirm your email following this link https://blogyouropinion.ddns.net/register_confirm.php?id=$jwt");
 														echo '<h1 class="title is-4 " style="text-align:center">Check your email inbox to confirm your email</h1>';
 												  }
 												  else{
-													echo '<h1 class="title is-4 " style="text-align:center">Email arleady taken</h1>';
+													echo '<h1 class="title is-4 " style="text-align:center">Email arleady taken</h1>
+                                <script>document.getElementById("email").classList.toggle("is-danger")</script>';
 												  }
 											}
 											else{
-												echo '<h1 class="title is-4 " style="text-align:center">Nickname arleady taken</h1>';
+												echo '<h1 class="title is-4 " style="text-align:center">Nickname arleady taken</h1>
+                        <script>document.getElementById("nickname").classList.toggle("is-danger")</script>';
 											}
 									}
 								}

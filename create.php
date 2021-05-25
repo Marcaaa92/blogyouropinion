@@ -28,12 +28,12 @@ require_once("function.php");
 													<div class="field">
 													  <label class="label">Title</label>
 													  <div class="control">
-														<input class="input" type="text" name="title" placeholder="Insert the title of article" maxlength="255" required>
+														<input class="input" type="text" name="title" placeholder="Insert the title of article" maxlength="255" value="';if(isset($_POST["title"])){echo $_POST["title"];};echo'" required>
 													</div>
 													<div class="field">
 													  <label class="label">Subtitle</label>
 													  <div class="control">
-														<input class="input" type="text" name="subtitle" placeholder="Insert the subtitle of article" maxlength="255" required>
+														<input class="input" type="text" name="subtitle" id="article" placeholder="Insert the subtitle of article" maxlength="255" required>
 													</div>
 													</div>
 													<div class="select">
@@ -59,7 +59,7 @@ require_once("function.php");
 													<div class="field">
 														<label class="label">The contents of article (write with the markdown sintax)</label>
 														<div class="markdown-editor">
-															<textarea class="textarea" type="text" name="article" placeholder="Insert the contents of article" maxlength="16777215"></textarea>
+															<textarea class="textarea" type="text" name="article" placeholder="Insert the contents of article" value="';if(isset($_POST["article"])){echo $_POST["article"];};echo'" maxlength="16777215"></textarea>
 															</div>
 													</div>
 													<div class="file">
