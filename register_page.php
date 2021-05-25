@@ -108,6 +108,7 @@ require_once("function.php");
 							require_once 'jwt/src/SignatureInvalidException.php';
 							require_once 'jwt/src/JWT.php';
 							use \Firebase\JWT\JWT;
+              $key = "zlatan";
 							if(isset($_POST['register'])){
 								if(isset($_POST["nickname"])||isset($_POST["name"])||isset($_POST["surname"])||isset($_POST["email"])||isset($_POST["password1"])||isset($_POST["password"])){
 									$nickname=strip_tags($_POST["nickname"]);
@@ -129,7 +130,6 @@ require_once("function.php");
 												  $stmt = $db->prepare("SELECT email FROM user WHERE email = ?");
 												  $stmt->execute([$email]);
 												  if ($stmt->rowCount() == 0) {
-													  $key = "zlatan";
 														$issuedAt = time();
 														$expirationTime = $issuedAt + 60*60;
 													  $token = array(
@@ -146,7 +146,7 @@ require_once("function.php");
 													  );
 													$jwt = JWT::encode($token, $key);
 
-													 sendMail($email, 'Email confirm - BlogYourOpinion', "Hey $name confirm your email following this link https://blogyouropinion.ddns.net/register_confirm.php?id=$jwt");
+													 sendMail($email, 'Email confirm - BlogYourOpinion', "Hey $name confirm your email following this link https://blogyouropinion.ddns.net/register_page.php?action=confirm&id=$jwt");
 														echo '<h1 class="title is-4 " style="text-align:center">Check your email inbox to confirm your email</h1>';
 												  }
 												  else{
@@ -164,6 +164,45 @@ require_once("function.php");
 									echo '<h1 class="title is-4 " style="text-align:center">Missing fields, check if all fields are filled</h1>';
 								}
 							}
+              else if($_GET["action"]=="confirm"&&isset($_GET["id"])){
+                if(isset($_GET["id"])){
+                  try{
+                      $jwt = $_GET["id"];
+                      $decoded = JWT::decode($jwt, $key, array('HS256'));
+                      $decoded_array = (array) $decoded;
+                      JWT::$leeway = 60;
+
+                      $decoded_data = (array) $decoded_array["data"];
+                      $nickname = $decoded_data["nickname"];
+                      $name = $decoded_data["name"];
+                      $surname = $decoded_data["surname"];
+                      $email = $decoded_data["email"];
+                      $team = $decoded_data["team"];
+                      $password = $decoded_data["password"];
+                      $date=date("Y-m-d");
+                      $stmt = $db->prepare("SELECT nickname,email FROM user WHERE nickname = ? OR email=?");
+                      $stmt->execute([$nickname, $email]);
+                      if ($stmt->rowCount() == 1){
+                        echo '<h1 class="title is-4 " style="text-align:center">Email already confirmed</h1>';
+                      }
+                      else{
+                        $stmt = $db->prepare("INSERT INTO user (nickname,name,surname,email,password,subscribed,role,team) VALUES (?,?,?,?,?,?,?,?)");
+                        $r = $stmt->execute([$nickname,$name,$surname,$email,$password,$date,1,$team]);
+                      echo '<h1 class="title is-4" style="text-align:center">Email confirmed successfully</h1>';
+                      }
+                    } catch (Exception $e) {
+                      if($e->getMessage()=="Expired token"){
+                        echo '<h1 class="title is-4 " style="text-align:center">Time expired</h1>';
+                      }
+                      else{
+                          echo '<h1 class="title is-4 " style="text-align:center">Token manumited or not valid</h1>';
+                      }
+                    }
+                  }
+                  else{
+                    echo '<h1 class="title is-4" style="text-align:center">Token not sent</h1>';
+                  }
+              }
 							?>
 						</div>
 					</div>

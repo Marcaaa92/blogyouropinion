@@ -216,6 +216,34 @@ require_once("function.php");
 											</div>
 									</form>';
 								}
+                else if($_GET["action"]=="edit-mail-confirm"){
+                  $key = "zlatan";
+                  if(isset($_GET["id"])){
+                    try{
+                      $jwt = $_GET["id"];
+                      $decoded = JWT::decode($jwt, $key, array('HS256'));
+                      $decoded_array = (array) $decoded;
+                      JWT::$leeway = 60;
+
+                      $decoded_data = (array) $decoded_array["data"];
+                      $email = $decoded_data["email"];
+                      $id = $decoded_data["id"];
+                      $stmt = $db->prepare("UPDATE user SET email = ? WHERE id=?");
+                      $r = $stmt->execute([$email,$id]);
+                      echo '<h1 class="title is-4" style="text-align:center">Email successfully confirmed</h1>';
+                      } catch (Exception $e) {
+                      if($e->getMessage()=="Expired token"){
+                        echo '<h1 class="title is-4 " style="text-align:center">Time expired</h1>';
+                      }
+                      else{
+                          echo '<h1 class="title is-4 " style="text-align:center">Token manumited or not valid</h1>';
+                      }
+                    }
+                  }
+                  else{
+                    echo '<h1 class="title is-4" style="text-align:center">Token not sent</h1>';
+                  }
+                }
 							}
 							else{
 								echo '<h1 class="title is-4 " style="text-align:center">You have not selected any action for your account</h1>';
@@ -314,12 +342,9 @@ require_once("function.php");
 																  "id" => $id,
 															  )
 														  );
-
 														  $jwt = JWT::encode($token, $key);
-
-
-																sendMail($email, 'Email confirm - BlogYourOpinion',"Hey $name verifiy your email with the following link https://blogyouropinion.ddns.net/edit_mail_confirm.php?id=$jwt");
-																echo '<h1 class="title is-4 " style="text-align:center">Check your email inbox to confirm your email</h1>';
+															sendMail($email, 'Email confirm - BlogYourOpinion',"Hey $name verifiy your email with the following link https://blogyouropinion.ddns.net/edit.php?action=edit-mail-confirm&id=$jwt");
+															echo '<h1 class="title is-4 " style="text-align:center">Check your email inbox to confirm your email</h1>';
 												}
 												else{
 													echo '<h1 class="title is-4 " style="text-align:center">Wrong password, type it again</h1>';
@@ -336,7 +361,6 @@ require_once("function.php");
 													$stmt = $db->prepare("UPDATE user SET team = ? WHERE id=?");
 													$stmt->execute([$team, $id]);
 													echo '<h1 class="title is-4 " style="text-align:center">Edit successfullly</h1>';
-
 								}
 							}
 						?>
