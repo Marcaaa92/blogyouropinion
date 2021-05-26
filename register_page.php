@@ -94,6 +94,8 @@ require_once("function.php");
 								  <div class="control">
 									<button class="button is-link" type="submit" name="register" id="register" value="register" disabled>Sign up</button>
 								  </div>
+                  <br>
+                  <a href="login_page.php"><p>Sei già registrato? Accedi</p></a>
 								</div>
 							</form>
 							<?php
@@ -209,6 +211,5 @@ require_once("function.php");
 				</div>
 		</section>
 	</body>
-  <script src="function.js"></script>
 <script src="https://kit.fontawesome.com/ee36c308c7.js" crossorigin="anonymous"></script>
 </html>

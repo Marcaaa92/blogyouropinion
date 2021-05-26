@@ -369,6 +369,4 @@ require_once("function.php");
 				</div>
 		</section>
 	</body>
-  <script src="https://kit.fontawesome.com/ee36c308c7.js" crossorigin="anonymous"></script>
-  <script src="function.js"></script>
 </html>

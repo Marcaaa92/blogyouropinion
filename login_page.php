@@ -48,6 +48,7 @@ require_once("function.php");
 										<button class="button is-link" type="submit" name="login" id="login" value="login">Login</button>
 									</div>
 								</div>
+                <a href="register_page.php"><p>Not registered yet? Sign in</p></a>
 								<a href="reset_password.php?action=email"><p>Forgotten your password?</p></a>
 							</form>
 							<?php
@@ -89,5 +90,4 @@ require_once("function.php");
 			</div>
 		</section>
 	</body>
-  <script src="https://kit.fontawesome.com/ee36c308c7.js" crossorigin="anonymous"></script>
 </html>

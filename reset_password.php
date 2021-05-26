@@ -165,5 +165,4 @@ require_once 'jwt/src/JWT.php';
 		</section>
 	</body>
   <script src="function.js"></script>
-  <script src="https://kit.fontawesome.com/ee36c308c7.js" crossorigin="anonymous"></script>
 </html>
