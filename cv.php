@@ -22,13 +22,19 @@ require_once("function.php");
 						<?php
 							if(isset($_SESSION["id"])){
 								if($_SESSION["role"]=="redactor"){
-									$cv="./cvdir/".$_GET["cv"];
-									header('Content-Type: application/pdf');
-									header('Content-Disposition: attachment; filename="'.$_GET["cv"].'"');
-									header('Content-Length: ' . filesize($cv));
-									ob_clean();
-									flush();
-									readfile($cv);
+									$cv="./pippo-esame_pre_analisi.pdf";
+                  echo $cv;
+                  if(file_exist($cv)){
+                  header('Cache-Control: public');
+                  header('Content-Type: application/pdf');
+                  header('Content-Disposition: attachment; filename="'.$_GET["cv"].'"');
+                  header('Content-Length: '.filesize($cv));
+echo " esiste";
+                  readfile($cv);
+                }
+                else{
+                  echo "non esiste";
+                }
 								}
 								else{
 									echo '<h1 class="title is-4 " style="text-align:center">You have not permission to see this content</h1>';
