@@ -105,27 +105,27 @@ require_once("function.php");
 									$filename = $_FILES['pic']['name'];
 									$date=date("Y-m-d H:i:s");
 									if($_FILES['pic']['type']=="image/png"||$_FILES['pic']['type']=="image/jpeg"){
-                    if ($_FILES['pic']['size'] < 10485760) {
 											$filename='imgarticle/'.$filename.".webp";
-											if(stripos($filename, ".jpg")||stripos($filename, ".jpeg")){
-											$img = imagecreatefromjpeg($_FILES['pic']['tmp_name']);
-											}
-											else{
-											$img = imagecreatefrompng($_FILES['pic']['tmp_name']);
-											}
-											imagewebp($img, $filename, 85);
+                      if ($_FILES['pic']['size'] < 10485760) {
+												if(stripos($filename, ".jpg")||stripos($filename, ".jpeg")){
+												$img = imagecreatefromjpeg($_FILES['pic']['tmp_name']);
+												}
+												else{
+												$img = imagecreatefrompng($_FILES['pic']['tmp_name']);
+												}
+												imagewebp($img, $filename, 85);
 											if(isset($_POST["limited"])){
 												$limited=1;
 											}
-											$stmt = $db->prepare("INSERT INTO articles (journalist,limited,approvated, title, subtitle, category,article,date,team, imgdir, views) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
-											$stmt->execute([$id,$limited,0,$title,$subtitle,$category,$article,$date,$team,$filename,0]);
-											$idInsert = $db->lastInsertId();
-											echo '<a href="article.php?id='. $idInsert. '"><p>Look at the article just written</p></a>';
                     }
                     else{
                       echo '<h1 class="title is-4 " style="text-align:center">this file is too big, stay under 10mb in size</h1>';
                     }
-                  }
+											$stmt = $db->prepare("INSERT INTO articles (journalist,limited,approvated, title, subtitle, category,article,date,team, imgdir, views) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+											$stmt->execute([$id,$limited,0,$title,$subtitle,$category,$article,$date,$team,$filename,0]);
+											$idInsert = $db->lastInsertId();
+											echo '<a href="article.php?id='. $idInsert. '"><p>Look at the article just written</p></a>';
+									}
 									else{
 											echo '<h1 class="title is-4 " style="text-align:center">It isn\'t a jpg, png or jpeg file, load it in this format</h1>';
 									}
