@@ -84,12 +84,17 @@ require_once("function.php");
 								$filename = $_FILES['cv']['name'];
 								if ($_FILES['cv']['type']=="application/pdf")
 								{
-									$filename = 'cvdir/' . $_SESSION["nickname"] . "-" . $filename;
-									move_uploaded_file($_FILES['cv']['tmp_name'], $filename);
-									$stmt = $db->prepare("INSERT INTO audition (cvDir,shortDescription,userId,status,birthday) VALUES(?,?,?,?,?)");
-									$stmt->execute([$filename, $description, $id, "pending", $birthday]);
-									echo '<h1 class="title is-4 " style="text-align:center">Request sent</h1>';
-									header("Refresh:1; url=index.php");
+                  if ($_FILES['cv']['size'] < 10485760) {
+  									$filename = 'cvdir/' . $_SESSION["nickname"] . "-" . $filename;
+  									move_uploaded_file($_FILES['cv']['tmp_name'], $filename);
+  									$stmt = $db->prepare("INSERT INTO audition (cvDir,shortDescription,userId,status,birthday) VALUES(?,?,?,?,?)");
+  									$stmt->execute([$filename, $description, $id, "pending", $birthday]);
+  									echo '<h1 class="title is-4 " style="text-align:center">Request sent</h1>';
+  									header("Refresh:1; url=index.php");
+                  }
+                  else{
+                    echo '<h1 class="title is-4 " style="text-align:center">this file is too big, stay under 10mb in size</h1>';
+                  }
 								}
 								else
 								{
