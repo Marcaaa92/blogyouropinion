@@ -105,14 +105,14 @@ require_once("function.php");
 									$filename = $_FILES['pic']['name'];
 									$date=date("Y-m-d H:i:s");
 									if($_FILES['pic']['type']=="image/png"||$_FILES['pic']['type']=="image/jpeg"){
-											$filename='imgarticle/'.$filename;
+											$filename='imgarticle/'.$filename.".webp";
 												if(stripos($filename, ".jpg")||stripos($filename, ".jpeg")){
 												$img = imagecreatefromjpeg($_FILES['pic']['tmp_name']);
 												}
 												else{
 												$img = imagecreatefrompng($_FILES['pic']['tmp_name']);
 												}
-												imagejpeg($img, $filename, 95);
+												imagewebp($img, $filename, 85);
 											if(isset($_POST["limited"])){
 												$limited=1;
 											}
