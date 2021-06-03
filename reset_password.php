@@ -1,4 +1,4 @@
-title is-4<?php
+<?php
 use \Firebase\JWT\JWT;
 session_start();
 require_once("function.php");
