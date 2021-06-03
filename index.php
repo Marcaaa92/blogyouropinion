@@ -21,7 +21,7 @@ require_once("function.php");
 		<section class="section">
 			<div style="text-align:center">
 				<a href="https://www.legaseriea.it/it">
-					<img src="https://www.legaseriea.it/assets/legaseriea/images/logo_main_default.png?v=25" width="78" height="78" title="serieA website" ></a>
+					<img src="images/logo_main_default.webp" width="78" height="78" title="serieA website" ></a>
 				</a>
 			</div>
 			<?php
