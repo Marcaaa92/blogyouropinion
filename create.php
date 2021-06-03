@@ -106,6 +106,7 @@ require_once("function.php");
 									$date=date("Y-m-d H:i:s");
 									if($_FILES['pic']['type']=="image/png"||$_FILES['pic']['type']=="image/jpeg"){
                      if ($_FILES['pic']['size'] < 10485760) {
+                      $filenamewebp="imgarticle/webp/".$filename.".webp";
 											$filename='imgarticle/'.$filename;
                       if ($_FILES['pic']['size'] < 10485760) {
 												if(stripos($filename, ".jpg")||stripos($filename, ".jpeg")){
@@ -115,6 +116,7 @@ require_once("function.php");
 												$img = imagecreatefrompng($_FILES['pic']['tmp_name']);
 												}
 												imagejpeg($img, $filename, 85);
+                        imagewebp($img,$filenamewebp, 80);
 											if(isset($_POST["limited"])){
 												$limited=1;
 											}

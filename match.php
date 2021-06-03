@@ -78,16 +78,16 @@ require_once("function.php");
 								if($type=="Goal"){
 									if($assist==null){
 									if($detail=="Penalty")
-									echo "<tr><td><img src=\"./images/gol.jpg\"></td><td><p>Penalty: $player</p></td><td></td><td><p>$elapsed</p></td><td></td><td><p></p></td><td></td></tr>";
+									echo "<tr><td><img src=\"./images/gol.webp\"></td><td><p>Penalty: $player</p></td><td></td><td><p>$elapsed</p></td><td></td><td><p></p></td><td></td></tr>";
 									else if ($detail=="Missed Penalty")
-									echo "<tr><td><img src=\"./images/gol.jpg\"></td><td><p>Missed penalty: $player (R)</p></td><td></td><td><p>$elapsed</p></td><td></td><td><p></p></td><td></td></tr>";
+									echo "<tr><td><img src=\"./images/gol.webp\"></td><td><p>Missed penalty: $player (R)</p></td><td></td><td><p>$elapsed</p></td><td></td><td><p></p></td><td></td></tr>";
 									else if($detail=="Own Goal")
-									echo "<tr><td><img src=\"./images/gol.jpg\"></td><td><p>Autogol: $player</p></td><td></td><td><p>$elapsed</p></td><td></td><td><p></p></td><td></td></tr>";
+									echo "<tr><td><img src=\"./images/gol.webp\"></td><td><p>Autogol: $player</p></td><td></td><td><p>$elapsed</p></td><td></td><td><p></p></td><td></td></tr>";
 									else
-									echo "<tr><td><img src=\"./images/gol.jpg\"></td><td><p>Goal: $player</p></td><td></td><td><p>$elapsed</p></td><td></td><td><p></p></td><td></td></tr>";
+									echo "<tr><td><img src=\"./images/gol.webp\"></td><td><p>Goal: $player</p></td><td></td><td><p>$elapsed</p></td><td></td><td><p></p></td><td></td></tr>";
 									}
 									else
-									echo "<tr><td><img src=\"./images/gol.jpg\"></td><td><p>Goal: $player | Assist: $assist</p></td><td></td><td><p>$elapsed</p></td><td></td><td><p></p></td><td></td></tr>";
+									echo "<tr><td><img src=\"./images/gol.webp\"></td><td><p>Goal: $player | Assist: $assist</p></td><td></td><td><p>$elapsed</p></td><td></td><td><p></p></td><td></td></tr>";
 								}
 								else if($type=="Card"){
 									if($detail=="Yellow Card")
@@ -98,23 +98,23 @@ require_once("function.php");
 
 								}
 								else if($type=="subst"){
-									echo "<tr><td><img src=\"./images/sost.png\"></td><td><p><font color='red'>$assist</font> | <font color='green'>$player</font></p></td><td></td><td><p>$elapsed</p></td><td></td><td><p></p></td><td></td></tr>";
+									echo "<tr><td><img src=\"./images/sost.webp\"></td><td><p><font color='red'>$assist</font> | <font color='green'>$player</font></p></td><td></td><td><p>$elapsed</p></td><td></td><td><p></p></td><td></td></tr>";
 								}
 							}
 							else{
 								if($type=="Goal"){
 									if($assist==null){
 									if($detail=="Penalty")
-									echo "<tr><td></td></td><td></td><td></td><td><p>$elapsed</p></td><td></td><td><p>Penalty: $player (R)</p></td><td><img src=\"./images/gol.jpg\"></td></tr>";
+									echo "<tr><td></td></td><td></td><td></td><td><p>$elapsed</p></td><td></td><td><p>Penalty: $player (R)</p></td><td><img src=\"./images/gol.webp\"></td></tr>";
 									else if($detail=="Missed Penalty")
-									echo "<tr><td></td></td><td></td><td></td><td><p>$elapsed</p></td><td></td><td><p>Missed penalty: $player</p></td><td><img src=\"./images/gol.jpg\"></td></tr>";
+									echo "<tr><td></td></td><td></td><td></td><td><p>$elapsed</p></td><td></td><td><p>Missed penalty: $player</p></td><td><img src=\"./images/gol.webp\"></td></tr>";
 									else if($detail=="Own Goal")
-									echo "<tr><td></td></td><td></td><td></td><td><p>$elapsed</p></td><td></td><td><p>Autogol: $player</p></td><td><img src=\"./images/gol.jpg\"></td></tr>";
+									echo "<tr><td></td></td><td></td><td></td><td><p>$elapsed</p></td><td></td><td><p>Autogol: $player</p></td><td><img src=\"./images/gol.webp\"></td></tr>";
 									else
-									echo "<tr><td></td></td><td></td><td></td><td><p>$elapsed</p></td><td></td><td><p>Goal: $player</p></td><td><img src=\"./images/gol.jpg\"></td></tr>";
+									echo "<tr><td></td></td><td></td><td></td><td><p>$elapsed</p></td><td></td><td><p>Goal: $player</p></td><td><img src=\"./images/gol.webp\"></td></tr>";
 									}
 									else
-									echo "<tr><td></td></td><td></td><td></td><td><p>$elapsed</p></td><td></td><td><p>Goal: $player | Assist: $assist</p></td><td><img src=\"./images/gol.jpg\"></td></tr>";
+									echo "<tr><td></td></td><td></td><td></td><td><p>$elapsed</p></td><td></td><td><p>Goal: $player | Assist: $assist</p></td><td><img src=\"./images/gol.webp\"></td></tr>";
 								}
 								else if($type=="Card"){
 								if($detail=="Yellow Card")
@@ -124,7 +124,7 @@ require_once("function.php");
 									echo "<tr><td></td><td></td><td></td><td><p>$elapsed</p></td><td></td><td><p>$player</p></td><td style='background-color:red'></td></tr>";
 								}
 								else if($type=="subst"){
-								echo "<tr><td></td><td></td><td></td><td><p>$elapsed</p></td><td></td><td><p><font color='red'>$assist</font> | <font color='green'>$player</font></p></td><td><img src=\"./images/sost.png\"></td></tr>";
+								echo "<tr><td></td><td></td><td></td><td><p>$elapsed</p></td><td></td><td><p><font color='red'>$assist</font> | <font color='green'>$player</font></p></td><td><img src=\"./images/sost.webp\"></td></tr>";
 								}
 							}
 							}
