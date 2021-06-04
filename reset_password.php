@@ -139,7 +139,7 @@ require_once 'jwt/src/JWT.php';
 											)
 										);
 										$jwt = JWT::encode($token, $key);
-										sendMail($email, 'Edit password - BlogYourOpinion', "Hey $name confirm your action to edit password following this link https://blogyouropinion.ddns.net/reset_password.php?action=setPassword&id=$jwt, if you have not requested a change of password, ignore this mail");
+										sendMail($email, 'Edit password - BlogYourOpinion', "Hey $name confirm your action to edit password following this link https://".$_SERVER['SERVER_NAME']."/reset_password.php?action=setPassword&id=$jwt, if you have not requested a change of password, ignore this mail");
 										echo '<h1 class="title is-4 " style="text-align:center">Check your email inbox to confirm your email</h1>';
 									}
 									else{

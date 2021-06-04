@@ -148,7 +148,7 @@ require_once("function.php");
 													  );
 													$jwt = JWT::encode($token, $key);
 
-													 sendMail($email, 'Email confirm - BlogYourOpinion', "Hey $name confirm your email following this link https://blogyouropinion.ddns.net/register_page.php?action=confirm&id=$jwt");
+													 sendMail($email, 'Email confirm - BlogYourOpinion', "Hey $name confirm your email following this link https://".$_SERVER['SERVER_NAME']."/register_page.php?action=confirm&id=$jwt");
 														echo '<h1 class="title is-4 " style="text-align:center">Check your email inbox to confirm your email</h1>';
 												  }
 												  else{
