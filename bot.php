@@ -50,6 +50,18 @@ else if(substr($message, 0, 4)=="/set"){
     sendMessage($id,"You have arleady registred this telegram account");
   }
 }
+else if($message=="/unset"){
+  $stmt = $db->prepare("SELECT telegramId FROM user WHERE telegramId=? AND telegramId");
+  $stmt->execute([$id]);
+  if ($stmt->rowCount() == 1) {
+    sendMessage($id,"Newsletter removed");
+    $stmt = $db->prepare("UPDATE user SET telegramId = NULL WHERE telegramId=?");
+    $r = $stmt->execute([$id]);
+  }
+  else{
+    sendMessage($id,"The newsletter is not settet");
+  }
+}
 else{
     sendMessage($id,"I'm sorry i don't understand");
 }
