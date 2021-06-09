@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once("function.php");
+ob_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +56,8 @@ require_once("function.php");
 										while($row = $stmt->fetch()){
 											sleep(0.03);
 											sendPhoto($row["telegramId"],$row["imgdir"],"New article pubblished!\n<b>".$row["title"]."</b>\n<i>".$row["subtitle"]."</i>\nLink:"."https://".$_SERVER['SERVER_NAME']."/article.php?id=". $_GET["id"]);
-										}
+                    }
+                    header("Refresh:0; url=request.php");
 									}
 								}
 								?>
