@@ -46,6 +46,7 @@ ob_start();
 											$stmt->execute([4, $_GET["iduser"]]);
 											sendMail($_GET["email"], 'Result of your audition BlogYourOpinion', "hello, you have been removed from the role 'journalist'");
 										}
+                    header("Refresh:0; url=request.php");
 									}
 									else{
 										$stmt = $db->prepare("UPDATE articles SET approvated = ? WHERE id=?");
