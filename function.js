@@ -16,6 +16,15 @@ function checkpw() {
     }
   }
 }
+function deletet(){
+  document.getElementById("notify").innerHTML="";
+}
+var i=0;
+function telegramInfo(){
+  if(i==0)
+   document.getElementById("notify").innerHTML='</br><div class="notification is-link"><button class="delete" onclick="deletet()"></button>it is possible receive feed of news publication on telegram, click on the button to get information and activate it</div></br>';
+  i++;
+}
 document.addEventListener('DOMContentLoaded', function() {
 
   // Get all "navbar-burger" elements

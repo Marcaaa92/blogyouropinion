@@ -91,7 +91,7 @@ ob_start();
   									$stmt = $db->prepare("INSERT INTO audition (cvDir,shortDescription,userId,status,birthday) VALUES(?,?,?,?,?)");
   									$stmt->execute([$filename, $description, $id, "pending", $birthday]);
   									echo '<h1 class="title is-4 " style="text-align:center">Request sent</h1>';
-  									header("Refresh:1; url=index.php");
+  									header("Refresh:0; url=index.php");
                   }
                   else{
                     echo '<h1 class="title is-4 " style="text-align:center">this file is too big, stay under 10mb in size</h1>';

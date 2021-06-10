@@ -24,11 +24,11 @@
 								if(isset($_SESSION["id"])){
 									echo'<h1 class="title is-4 " style="text-align:center">Logging out</h1>';
 									session_destroy();
-									header("Refresh:1; url=index.php");
+									header("Refresh:0; url=index.php");
 								}
 								else{
 									echo '<h1 class="title is-4 " style="text-align:center">You are not logged in, therefore, you will be taken to the homepage</h1>';
-									header("Refresh:1; url=index.php");
+									header("Refresh:0; url=index.php");
 								}
 								?>
 							</div>

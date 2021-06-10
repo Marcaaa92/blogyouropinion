@@ -312,9 +312,7 @@ require_once("function.php");
 										if ($stmt->rowCount() == 1) {
 											$stmt = $db->prepare("DELETE FROM user WHERE id = ?");
 											$stmt->execute([$id]);
-											session_destroy();
-											sleep(3);
-											header("location: ./index.php");
+                      header("Refresh:0; url=index.php");
 										}
 										else{
 											echo '<h1 class="title is-4 " style="text-align:center">Wrong password, type it again</h1>';
