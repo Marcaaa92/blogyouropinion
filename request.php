@@ -51,12 +51,14 @@ ob_start();
 									else{
 										$stmt = $db->prepare("UPDATE articles SET approvated = ? WHERE id=?");
 										$stmt->execute([1, $_GET["id"]]);
-										sendMail($_GET["email"], 'Result of your article BlogYourOpinion', "Your article has been approved<br>Link: https://".$_SERVER['SERVER_NAME']."/article.php?id=". $_GET["id"]);
+										sendMail($_GET["email"], 'Result of your article BlogYourOpinion', "Your article has been approved<br>Link: https://".$_SERVER['SERVER_NAME']."/blogyouropinion/article.php?id=". $_GET["id"]);
 										$stmt = $db->prepare("SELECT user.telegramId, articles.title, articles.subtitle, articles.imgdir FROM user JOIN articles WHERE articles.id=? AND telegramId IS NOT NULL AND articles.team=user.team");
 										$stmt->execute([$_GET["id"]]);
+
 										while($row = $stmt->fetch()){
+										error_log("send telegram".$row["telegramId"]);
 											sleep(0.03);
-											sendPhoto($row["telegramId"],$row["imgdir"],"New article pubblished!\n<b>".$row["title"]."</b>\n<i>".$row["subtitle"]."</i>\nLink:"."https://".$_SERVER['SERVER_NAME']."/article.php?id=". $_GET["id"]);
+											sendPhoto($row["telegramId"],$row["imgdir"],"New article pubblished!\n<b>".$row["title"]."</b>\n<i>".$row["subtitle"]."</i>\nLink:"."https://".$_SERVER['SERVER_NAME']."/blogyouropinion/blogyouropinion/article.php?id=". $_GET["id"]);
                     }
                     header("Refresh:0; url=request.php");
 									}

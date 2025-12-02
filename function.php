@@ -1,7 +1,18 @@
 <?php
-require_once("dbconnection.php");
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require("dbconnection.php");
 date_default_timezone_set('Europe/Rome');
 error_reporting(E_ERROR | E_PARSE);
+require 'mailer/src/Exception.php';
+require 'mailer/src/PHPMailer.php';
+require 'mailer/src/SMTP.php';
+
+$smtp_host = 'smtp.gmail.com'; // Es. 'smtp.gmail.com' o il tuo server hosting
+$smtp_port = 587; // Solitamente 587 (TLS) o 465 (SSL)
+$from = 'server.marca.mail@gmail.com'; // L'indirizzo che apparirà come mittente
+
+
 function timeDiff($firstTime)
 {
     $dt = new DateTime($firstTime);
@@ -11,48 +22,157 @@ function timeDiff($firstTime)
 }
 function request($link)
 {
+    global $tokenApi;
+    
     $curl = curl_init();
+    
     curl_setopt_array($curl, [
-    	CURLOPT_URL => $link,
-    	CURLOPT_RETURNTRANSFER => true,
-    	CURLOPT_FOLLOWLOCATION => true,
-    	CURLOPT_ENCODING => "",
-    	CURLOPT_MAXREDIRS => 10,
-    	CURLOPT_TIMEOUT => 30,
-    	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    	CURLOPT_CUSTOMREQUEST => "GET",
-    	CURLOPT_HTTPHEADER => [
-    		"x-rapidapi-host: api-football-v1.p.rapidapi.com",
-    		"x-rapidapi-key: " + $tokenApi
-    	],
+      CURLOPT_URL => $link,
+      CURLOPT_CUSTOMREQUEST => "GET",
+      CURLOPT_RETURNTRANSFER => true, // ESSENZIALE! Assicurati che sia qui.
+      CURLOPT_TIMEOUT => 30, // Aggiungi un timeout per non bloccare
+      CURLOPT_HTTPHEADER => [
+        "x-rapidapi-host: api-football-v1.p.rapidapi.com",
+        "x-rapidapi-key: " . $tokenApi,
+      ],
     ]);
-    $response= json_decode(curl_exec($curl));
+    
+    $response_exec = curl_exec($curl);
+    $curl_error = curl_error($curl);
+    $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
     curl_close($curl);
-    return $response;
+
+    if ($curl_error) {
+        error_log("ERRORE cURL: " . $curl_error);
+    }
+    error_log("Codice HTTP ricevuto: " . $http_code);
+    error_log("Risposta API non decodificata: " . $response_exec); 
+
+    if ($response_exec === false || empty($response_exec)) {
+        return null;
+    }
+
+    return json_decode($response_exec);
 }
 function sendMail($to, $subject, $message){
-  $headers  = 'MIME-Version: 1.0' . "\r\n";
-  $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-  $headers .= 'From: '.$from."\r\n".
-      'Reply-To: '.$from."\r\n" .
-      'X-Mailer: PHP/' . phpversion();
-  mail($to, $subject, $message, $headers);
+    // Rendi accessibili le variabili globali del server SMTP e del mittente
+    global $smtp_host, $smtp_username, $smtp_password, $smtp_port, $from; 
+
+    // 1. Inizializza PHPMailer
+    $mail = new PHPMailer(true); // 'true' abilita le eccezioni
+    
+    try {
+        // 2. Configurazione del server SMTP
+        $mail->isSMTP();                                            // Usa SMTP
+        $mail->Host       = $smtp_host;                             // Specifica il server SMTP
+        $mail->SMTPAuth   = true;                                   // Abilita l'autenticazione SMTP
+        $mail->Username   = $smtp_username;                         // Nome utente SMTP (la tua email)
+        $mail->Password   = $smtp_password;                         // Password SMTP
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Abilita TLS encryption (usare ENCRYPTION_SMTPS per la porta 465)
+        $mail->Port       = $smtp_port;                             // Porta TCP (es. 587)
+        
+        $mail->CharSet = 'UTF-8';                                   // Imposta la codifica UTF-8
+        $mail->isHTML(true);                                        // Imposta il formato email in HTML
+        
+        // 3. Destinatari e Mittente
+        $mail->setFrom($from, 'Blogyouropinion');                   // Imposta il mittente
+        $mail->addAddress($to);                                     // Aggiunge il destinatario
+                
+        // 4. Contenuto della mail
+        $mail->Subject = $subject;
+        $mail->Body    = $message;
+        
+        // Se si vuole un testo alternativo (non HTML)
+        $mail->AltBody = strip_tags($message); 
+
+        // 5. Invio
+        $mail->send();
+        
+        return true;
+        
+    } catch (Exception $e) {
+        // Se c'è un errore, viene catturato qui.
+        error_log("Errore invio mail con PHPMailer: {$mail->ErrorInfo}");
+        return false;
+    }
 }
 function sendMessage($id,$text){
-  $website="https://api.telegram.org/bot".$token;
-	$url="$website/sendMessage?chat_id=$id&parse_mode=html&text=".urlencode($text);
-	file_get_contents($url);
+global $tokenTelegram; 
+    
+    // Invia i dati tramite POST per maggiore affidabilità con Telegram API
+    $data = [
+        'chat_id' => $id,
+        'text' => $text,
+        'parse_mode' => 'HTML'
+    ];
+    
+    $website = "https://api.telegram.org/bot" . $tokenTelegram . "/sendMessage";
+    
+    // Inizializzazione cURL
+    $ch = curl_init($website);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+    $response = curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curl_error = curl_error($ch);
+    curl_close($ch);
+    
+    // Log di controllo
+    if ($http_code != 200) {
+        // Se Telegram non risponde con 200 OK, logga l'errore per il debug
+        error_log("Telegram API Error! Chat ID: {$id}, Status: {$http_code}, cURL Error: {$curl_error}, Response: " . $response);
+    }
+    
+    // Puoi restituire il risultato se necessario, ma non è obbligatorio
+    return $response;
 }
-function sendPhoto($id,$photo,$caption){
-  $website="https://api.telegram.org/bot".$token;
-	$url="$website/sendPhoto?chat_id=$id&photo=https://".$_SERVER['SERVER_NAME']."/".$photo."&parse_mode=html&caption=".urlencode($caption);
-	file_get_contents($url);
+function sendPhoto($id, $photo, $caption) {
+    // 1. Rendi accessibile la variabile globale $token
+    global $tokenTelegram; 
+    
+    // Per sicurezza, pulisci il token
+    $clean_token = trim($tokenTelegram); 
+
+    // 2. Costruisci l'URL della foto
+    // ATTENZIONE: Se il tuo sito non usa HTTPS, la chiamata fallirà.
+    $photo_url = "https://" . $_SERVER['SERVER_NAME'] . "/blogyouropinion/" . $photo;
+	error_log($photo_url);
+    // 3. Dati da inviare al server Telegram in POST
+    $data = [
+        'chat_id' => $id,
+        'photo' => $photo_url,
+        'caption' => $caption,
+        'parse_mode' => 'HTML'
+    ];
+    
+    $website = "https://api.telegram.org/bot" . $clean_token . "/sendPhoto";
+    
+    // --- Utilizzo di cURL (metodo più robusto) ---
+    $ch = curl_init($website);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+    $response = curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curl_error = curl_error($ch);
+    curl_close($ch);
+    
+    // Log di controllo in caso di errore
+    if ($http_code != 200) {
+        error_log("Telegram sendPhoto API Error! Chat ID: {$id}, Status: {$http_code}, cURL Error: {$curl_error}, Response: " . $response);
+    }
+    
+    return $response;
 }
 function loadNav()
 {
     echo '
     <script src="function.js"></script>
-    <script src="https://kit.fontawesome.com/ee36c308c7.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/22edea3724.js" crossorigin="anonymous"></script>
       	<nav class="navbar is-link is-fixed-top" role="navigation" aria-label="main navigation">
       			<div class="navbar-brand">
       				<a class="navbar-item" href="index.php">

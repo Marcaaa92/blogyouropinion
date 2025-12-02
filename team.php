@@ -68,14 +68,14 @@ require_once("function.php");
 													$response=json_decode($row["response"]);
 												}
 												else{
-													$response = request("https://api-football-v1.p.rapidapi.com/v2/fixtures/team/$id/2857?timezone=Europe%2FRome");
+													$response = request("https://api-football-v1.p.rapidapi.com/v3/fixtures?league=135&season=2025&team=$id");
 													$timestamp= date('Y-m-d H:i:s');
 													$stmt = $db->prepare("INSERT INTO matchbyteam(timestamp,response,teamId) VALUES (?,?,?)");
 													$stmt->execute([$timestamp,json_encode($response),$id]);
 												}
 											}
 											else{
-												$response = request("https://api-football-v1.p.rapidapi.com/v2/fixtures/team/$id/2857?timezone=Europe%2FRome");
+												$response = request("https://api-football-v1.p.rapidapi.com/v3/fixtures?league=135&season=2025&team=$id");
 												$timestamp= date('Y-m-d H:i:s');
 												$stmt = $db->prepare("INSERT INTO matchbyteam(timestamp,response,teamId) VALUES (?,?,?)");
 												$stmt->execute([$timestamp,json_encode($response),$id]);
@@ -83,8 +83,8 @@ require_once("function.php");
 
 											echo"<div class=\"columns is-mobile is-centered\"><div class=\"is-half is-offset-one-quarter\"><table class=\"table\">";
 											$round="";
-											for($i=0; $i<count($response->api->fixtures);$i++){
-											$round=$response->api->fixtures[$i]->round;
+											for($i=0; $i<count($response->response);$i++){
+											$round=$response->response[$i]->league->round;
 											if($round==$oldround){
 											}
 											else{
@@ -93,19 +93,19 @@ require_once("function.php");
 											echo"
 											<tr class='matches'><td colspan='6'><h1 class=\"title is-4\">Round $round</h1></td></tr>";
 											}
-												$id=$response->api->fixtures[$i]->fixture_id;
-												$elapsed=$response->api->fixtures[$i]->elapsed;
-												$date= str_replace(" ", "<br>" ,date("d-m-Y H:i", strtotime($response->api->fixtures[$i]->event_date)));
-												$status=$response->api->fixtures[$i]->status;
-												$homeTeamId=$response->api->fixtures[$i]->homeTeam->team_id;
-												$homeTeam=$response->api->fixtures[$i]->homeTeam->team_name;
-												$homeTeamGoal=$response->api->fixtures[$i]->goalsHomeTeam;
-												$homeTeamLogo=$response->api->fixtures[$i]->homeTeam->logo;
-												$awayTeamId=$response->api->fixtures[$i]->awayTeam->team_id;
-												$awayTeam=$response->api->fixtures[$i]->awayTeam->team_name;
-												$awayTeamGoal=$response->api->fixtures[$i]->goalsAwayTeam;
-												$awayTeamLogo=$response->api->fixtures[$i]->awayTeam->logo;
-												$score=$response->api->fixtures[$i]->score->fulltime;
+												$id=$response->response[$i]->fixture->id;
+												$elapsed=$response->response[$i]->fixture->status->elapsed;
+												$date= str_replace(" ", "<br>" ,date("d-m-Y H:i", strtotime($response->response[$i]->fixture->date)));
+												$status=$response->response[$i]->status->long;
+												$homeTeamId=$response->response[$i]->teams->home->id;
+												$homeTeam=$response->response[$i]->teams->home->name;
+												$homeTeamGoal=$response->response[$i]->score->fulltime->home;
+												$homeTeamLogo=$response->response[$i]->teams->home->logo;
+												$awayTeamId=$response->response[$i]->teams->away->id;
+												$awayTeam=$response->response[$i]->teams->away->name;
+												$awayTeamGoal=$response->response[$i]->score->fulltime->away;
+												$awayTeamLogo=$response->response[$i]->teams->away->logo;
+												$score=$response->response[$i]->score->fulltime->home."-".$response->response[$i]->score->fulltime->away;
 
 												if($status=="Match Finished"||$status=="Not Started"||$status=="Time to be defined"||$status=="Match Postponed")
 													echo "<tr class='matches'><td><img style='width:50px' src='$homeTeamLogo'></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$homeTeamId&action=article'>$homeTeam</a></h1></td><td>$date<br>$status<br><h1 class=\"title is-5\">$homeTeamGoal-$awayTeamGoal</h1><a href='./match.php?id=$id'>Details</a></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$awayTeamId&action=article'>$awayTeam</a></h1></td><td><img style='width:50px' src='$awayTeamLogo'></td></tr>";
@@ -125,28 +125,66 @@ require_once("function.php");
 									  </ul>
 									</div>
 									';
-									$stmt = $db->prepare("SELECT timestamp,response FROM playersbyteam WHERE teamId=? ORDER BY timestamp DESC LIMIT 1");
-									$stmt->execute([$id]);
-									if ($stmt->rowCount() == 1){
-										$row = $stmt->fetch();
-										if(timeDiff($row["timestamp"])<24*7){
-											$response=json_decode($row["response"]);
-										}
-										else{
-											$response = request("https://api-football-v1.p.rapidapi.com/v2/players/team/$id/2020-2021");
-											$timestamp= date('Y-m-d H:i:s');
-											$stmt = $db->prepare("INSERT INTO playersbyteam(timestamp,response,teamId) VALUES (?,?,?)");
-											$stmt->execute([$timestamp,json_encode($response),$id]);
-										}
-									}
-									else{
-										$response = request("https://api-football-v1.p.rapidapi.com/v2/players/team/$id/2020-2021");
-										$timestamp= date('Y-m-d H:i:s');
-										$stmt = $db->prepare("INSERT INTO playersbyteam(timestamp,response,teamId) VALUES (?,?,?)");
-										$stmt->execute([$timestamp,json_encode($response),$id]);
-									}
-									echo '<h1 class="title is-3 " style="text-align:center">Here are the players who have played at least one match in Serie A</h1>';
-									echo '<div id="table_div" class="table"></div>';
+$stmt = $db->prepare("SELECT timestamp,response FROM playersbyteam WHERE teamId=? ORDER BY timestamp DESC LIMIT 1");
+$stmt->execute([$id]);
+
+// Variabile per salvare tutti i dati dei giocatori
+$allPlayersResponse = null;
+
+if ($stmt->rowCount() == 1){
+    $row = $stmt->fetch();
+    
+    // Controlla la scadenza della cache (24*7 ore)
+    if (timeDiff($row["timestamp"]) < 24 * 7){
+        $allPlayersResponse = json_decode($row["response"]);
+    }
+}
+
+// Se i dati non sono stati caricati dalla cache, o la cache non esiste
+if ($allPlayersResponse === null) {
+    
+    // --- 1. PRIMA CHIAMATA (Pagina 1) ---
+    $decodedResponse1 = request("https://api-football-v1.p.rapidapi.com/v3/players?season=2025&league=135&team=$id&page=1");
+
+    
+    // Assumiamo che $decodedResponse1 sia un oggetto PHP valido
+    $allPlayersResponse = $decodedResponse1;
+    
+    // Verifica se esiste una pagina 2
+    $totalPages = $decodedResponse1->paging->total ?? 1;
+    
+    if ($totalPages > 1) {
+        // --- 2. SECONDA CHIAMATA (Pagina 2) ---
+        $decodedResponse2 = request("https://api-football-v1.p.rapidapi.com/v3/players?season=2025&league=135&team=$id&page=2");
+
+        // --- 3. UNIONE DEI RISULTATI ---
+        if (isset($decodedResponse2->response) && is_array($decodedResponse2->response)) {
+            // Unisce l'array 'response' della Pagina 1 con l'array 'response' della Pagina 2
+            $mergedResponses = array_merge(
+                $decodedResponse1->response, 
+                $decodedResponse2->response
+            );
+            
+            // Sostituisce l'array 'response' nell'oggetto della Pagina 1 con l'array unito
+            $allPlayersResponse->response = $mergedResponses;
+            
+            // Aggiorna anche il conteggio dei risultati totali e la paginazione
+            $allPlayersResponse->results = count($mergedResponses);
+            $allPlayersResponse->paging->total = 1; // Resettiamo a 1 la paginazione se tutti i dati sono qui
+        }
+    }
+    
+    // --- 4. SALVATAGGIO NEL DB (dopo aver unito tutti i dati) ---
+    $timestamp = date('Y-m-d H:i:s');
+    $stmt = $db->prepare("INSERT INTO playersbyteam(timestamp,response,teamId) VALUES (?,?,?)");
+    $stmt->execute([$timestamp, json_encode($allPlayersResponse), $id]);
+}
+
+// La variabile $response (o meglio $allPlayersResponse) contiene ora i dati uniti
+$response = $allPlayersResponse;
+
+echo '<h1 class="title is-3 " style="text-align:center">Here are the players who have played at least one match in Serie A</h1>';
+echo '<div id="table_div" class="table"></div>';
 								}
 								else{
 									echo '<h1 class="title is-4 " style="text-align:center">You have no selectet any action or team name</h1>';
@@ -164,7 +202,6 @@ require_once("function.php");
 		function drawTable() {
 			var data = new google.visualization.DataTable();
 			data.addColumn('string', 'Player name');
-			data.addColumn('string', 'Position');
 			data.addColumn('number', 'Age');
 			data.addColumn('string', 'Nationality');
 			data.addColumn('string', 'Height');
@@ -176,25 +213,40 @@ require_once("function.php");
 			data.addColumn('number', 'In lineups');
 			data.addRows([
 				<?php
-				$s="";
-					for($i=0; $i<count($response->api->players); $i++){
-						if($response->api->players[$i]->league=="Serie A"&&$response->api->players[$i]->games->appearences>0){
-							$playerName=addslashes ($response->api->players[$i]->player_name);
-							$position=$response->api->players[$i]->position;
-							$age=$response->api->players[$i]->age;
-							$nationality=addslashes ($response->api->players[$i]->nationality);
-							$height=$response->api->players[$i]->height;
-							$weight=$response->api->players[$i]->weight;
-							$goals=$response->api->players[$i]->goals->total;
-							$assists=$response->api->players[$i]->goals->assists;
-							$appearences=$response->api->players[$i]->games->appearences;
-							$minutes_played=$response->api->players[$i]->games->minutes_played;
-							$lineups=$response->api->players[$i]->games->lineups;
+				$s = "";
+				// Assicurati che $response->response sia un array prima di ciclare
+				if (isset($response->response) && is_array($response->response)) {
+					for($i = 0; $i < count($response->response); $i++){
+						$playerData = $response->response[$i]->player;
+						$statsData = $response->response[$i]->statistics[0];
+						
+						// --- Dati del Giocatore ---
+						// addslashes e gestione null per stringhe
+						$playerName = addslashes($playerData->name);
+						$nationality = addslashes($playerData->nationality);
+						
+						// Per Google Charts, i valori null per stringhe sono accettati come stringhe vuote
+						// Per i valori nulli che Google Charts deve trattare come null (se il campo lo permette) o 0
+						$height = $playerData->height ?? ''; 
+						$weight = $playerData->weight ?? ''; 
 
-						$s.= "['$playerName', '$position' , $age, '$nationality','$height', '$weight',$goals,$assists, $appearences , $minutes_played , $lineups],";
+						// --- Dati Statistiche (Numerici) ---
+						// Utilizzo di ?? 0 per convertire 'null' in 0, essenziale per i campi number di Google Charts
+						$age = $playerData->age ?? 0;
+						$goals = $statsData->goals->total ?? 0;
+						$assists = $statsData->goals->assists ?? 0;
+						$appearences = $statsData->games->appearences ?? 0;
+						$minutes_played = $statsData->games->minutes ?? 0;
+						$lineups = $statsData->games->lineups ?? 0;
+
+						// Costruzione della riga JavaScript
+						// NOTA: I valori stringa devono essere racchiusi tra apici singoli ('...')
+						// I valori numerici non devono avere apici
+						$s.= "['$playerName', $age, '$nationality', '$height', '$weight', $goals, $assists, $appearences, $minutes_played, $lineups],";
 					}
+					// Rimuove l'ultima virgola
+					echo rtrim($s, ',');
 				}
-				echo substr($s, 0, -1);
 				?>
 			]);
 

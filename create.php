@@ -92,7 +92,7 @@ require_once("function.php");
 									echo '<h1 class="title is-4 " style="text-align:center">You have not permission to create articles</h1>';
 								}
 
-								if(isset($_POST["send"])){
+if(isset($_POST["send"])){
 									require_once "parsedown/Parsedown.php";
 									$Parsedown = new Parsedown();
 									$id=$_SESSION["id"];
@@ -102,37 +102,63 @@ require_once("function.php");
 									$team=$_POST["team"];
 									$article=$Parsedown->text($_POST["article"]);
 									$limited=0;
-									$filename = $_FILES['pic']['name'];
+									// Variabile per conservare il nome originale per i controlli di estensione
+									$original_filename = $_FILES['pic']['name'];
 									$date=date("Y-m-d H:i:s");
+									
+									// 1. GENERAZIONE UUID: Creazione di un ID casuale e univoco (32 caratteri)
+                                    try {
+                                        $unique_id = bin2hex(random_bytes(16));
+                                    } catch (Exception $e) {
+                                        // Fallback se random_bytes non è disponibile
+                                        error_log("Errore generazione UUID: " . $e->getMessage());
+                                        $unique_id = uniqid('', true); 
+                                    }
+                                    
+                                    // 2. DEFINIZIONE DEI PERCORSI CON L'UUID
+                                    // Percorso per la versione JPG/PNG (salvato nel DB come imgdir)
+                                    $db_filename = 'imgarticle/' . $unique_id . '.jpg'; 
+                                    // Percorso per la versione WEBP
+									$webp_filename = "imgarticle/webp/" . $unique_id . ".jpg.webp";
+
+
 									if($_FILES['pic']['type']=="image/png"||$_FILES['pic']['type']=="image/jpeg"){
-                     if ($_FILES['pic']['size'] < 10485760) {
-                      $filenamewebp="imgarticle/webp/".$filename.".webp";
-											$filename='imgarticle/'.$filename;
-                      if ($_FILES['pic']['size'] < 10485760) {
-												if(stripos($filename, ".jpg")||stripos($filename, ".jpeg")){
-												$img = imagecreatefromjpeg($_FILES['pic']['tmp_name']);
+if ($_FILES['pic']['size'] < 10485760) {          
+	if ($_FILES['pic']['size'] < 10485760) {                                       
+												// Usa $original_filename per creare la risorsa immagine
+												if(stripos($original_filename, ".jpg") !== false || stripos($original_filename, ".jpeg") !== false){
+												    $img = imagecreatefromjpeg($_FILES['pic']['tmp_name']);
 												}
 												else{
-												$img = imagecreatefrompng($_FILES['pic']['tmp_name']);
+												    $img = imagecreatefrompng($_FILES['pic']['tmp_name']);
 												}
-												imagejpeg($img, $filename, 85);
-                        imagewebp($img,$filenamewebp, 80);
+                                                
+												// Salva la versione JPG/PNG usando il percorso con UUID
+												imagejpeg($img, $db_filename, 85);
+												// Salva la versione WEBP usando il percorso con UUID
+                         imagewebp($img, $webp_filename, 80);
+                                                
+                                                imagedestroy($img); // Libera la memoria
+                                                
 											if(isset($_POST["limited"])){
 												$limited=1;
 											}
-                    }
-                    else{
-                      echo '<h1 class="title is-4 " style="text-align:center">this file is too big, stay under 10mb in size</h1>';
-                    }
+ }
+ else{
+ echo '<h1 class="title is-4 " style="text-align:center">this file is too big, stay under 10mb in size</h1>';
+ }
+                                            
+                                            // 3. Inserimento nel DB: Usa il percorso con UUID
 											$stmt = $db->prepare("INSERT INTO articles (journalist,limited,approvated, title, subtitle, category,article,date,team, imgdir, views) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
-											$stmt->execute([$id,$limited,0,$title,$subtitle,$category,$article,$date,$team,$filename,0]);
+											$stmt->execute([$id,$limited,0,$title,$subtitle,$category,$article,$date,$team,$db_filename,0]);
+											
 											$idInsert = $db->lastInsertId();
 											echo '<a href="article.php?id='. $idInsert. '"><p>Look at the article just written</p></a>';
 									}
-                  else{
-                    echo '<h1 class="title is-4 " style="text-align:center">this file is too big, stay under 10mb in size</h1>';
-                  }
-                }
+ else{
+echo '<h1 class="title is-4 " style="text-align:center">this file is too big, stay under 10mb in size</h1>';
+ }
+ }
 									else{
 											echo '<h1 class="title is-4 " style="text-align:center">It isn\'t a jpg, png or jpeg file, load it in this format</h1>';
 									}
