@@ -61,23 +61,23 @@ require_once("function.php");
 								$response_data=json_decode($row["response"]);
 							}
 							else{
-								$response_data = request("https://api-football-v1.p.rapidapi.com/v2/leagueTable/2857?timezone=Europe%2FRome");
+								$response_data = request("https://api-football-v1.p.rapidapi.com/v3/standings?league=135&season=2025");
 								$timestamp= date('Y-m-d H:i:s');
 								$stmt = $db->prepare("INSERT INTO standing(timestamp,response) VALUES (?,?)");
 								$stmt->execute([$timestamp,json_encode($response_data)]);
 							}
 							echo"<div class='table-container'><table class=\"table\">";
 							echo "<th><th>#P</th><th>Logo</th><th>Team</th><th>Points</th><th>Games played</th><th>Goals for</th><th>Goal against</th><th>GD</th></tr>";
-							for($i=0; $i<count($response_data->api->standings[0]);$i++){
-									$teamName=$response_data->api->standings[0][$i]->teamName;
-									$rank=$response_data->api->standings[0][$i]->rank;
-									$matchsPlayed=$response_data->api->standings[0][$i]->all->matchsPlayed;
-									$point=$response_data->api->standings[0][$i]->point;
-									$goalsFor=$response_data->api->standings[0][$i]->all->goalsFor;
-									$goalsAgainst=$response_data->api->standings[0][$i]->all->goalsAgainst;
-									$logo=$response_data->api->standings[0][$i]->logo;
-									$team_id=$response_data->api->standings[0][$i]->team_id;
-									$points=$response_data->api->standings[0][$i]->points;
+							for($i=0; $i<count($response_data->response[0]->league->standings[0]);$i++){
+									$teamName=$response_data->response[0]->league->standings[0][$i]->team->name;
+									$rank=$response_data->response[0]->league->standings[0][$i]->rank;
+									$matchsPlayed=$response_data->response[0]->league->standings[0][$i]->all->played;
+									$point=$response_data->response[0]->league->standings[0][$i]->point;
+									$goalsFor=$response_data->response[0]->league->standings[0][$i]->all->goals->for;
+									$goalsAgainst=$response_data->response[0]->league->standings[0][$i]->all->goals->against;
+									$logo=$response_data->response[0]->league->standings[0][$i]->team->logo;
+									$team_id=$response_data->response[0]->league->standings[0][$i]->team->id;
+									$points=$response_data->response[0]->league->standings[0][$i]->points;
 									$goal_diff=($goalsFor)-($goalsAgainst);
                   if($i<4)
   									if($_SESSION["teamId"]==$team_id)
@@ -113,22 +113,23 @@ require_once("function.php");
 								$response_data=json_decode($row["response"]);
 							}
 							else{
-								$response_data = request("https://api-football-v1.p.rapidapi.com/v2/fixtures/rounds/2857/current");
+								$response_data = request("https://api-football-v1.p.rapidapi.com/v3/fixtures/rounds?league=135&season=2025&current=true");
 								$timestamp= date('Y-m-d H:i:s');
 								$stmt = $db->prepare("INSERT INTO current(timestamp,response) VALUES (?,?)");
 								$stmt->execute([$timestamp,json_encode($response_data)]);
+
 							}
-
-							$round=$response_data->api->fixtures[0];
-
+							$round=$response_data->response[0];
 							$stmt = $db->prepare("SELECT timestamp,response FROM turns ORDER BY timestamp DESC LIMIT 1");
 							$stmt->execute([]);
 							$row = $stmt->fetch();
+
 							if(timeDiff($row["timestamp"])<0.16){
 								$response=json_decode($row["response"]);
 							}
 							else{
-								$response = request("https://api-football-v1.p.rapidapi.com/v2/fixtures/league/2857/$round");
+								$rou = str_replace(" ", "%20", $round);
+								$response = request("https://api-football-v1.p.rapidapi.com/v3/fixtures?league=135&season=2025&round=$rou");
 								$timestamp= date('Y-m-d H:i:s');
 								$stmt = $db->prepare("INSERT INTO turns(timestamp,response) VALUES (?,?)");
 								$stmt->execute([$timestamp,json_encode($response)]);
@@ -137,21 +138,20 @@ require_once("function.php");
 								echo"<table class=\"table\">";
 								$round=preg_replace('/\D/', '', $round);
 								echo"<tr class='matches'><td colspan='6'><h1 class=\"title is-4\">Turns $round</h1></td></tr>";
-
-							for($i=0; $i<count($response->api->fixtures);$i++){
-									$id=$response->api->fixtures[$i]->fixture_id;
-									$date= str_replace(" ", "<br>" ,date("d-m-Y H:i", strtotime($response->api->fixtures[$i]->event_date)));
-									$status=$response->api->fixtures[$i]->status;
-									$elapsed=$response->api->fixtures[$i]->elapsed;
-									$homeTeamId=$response->api->fixtures[$i]->homeTeam->team_id;
-									$homeTeam=$response->api->fixtures[$i]->homeTeam->team_name;
-									$homeTeamLogo=$response->api->fixtures[$i]->homeTeam->logo;
-									$homeTeamGoal=$response->api->fixtures[$i]->goalsHomeTeam;
-									$awayTeamId=$response->api->fixtures[$i]->awayTeam->team_id;
-									$awayTeam=$response->api->fixtures[$i]->awayTeam->team_name;
-									$awayTeamLogo=$response->api->fixtures[$i]->awayTeam->logo;
-									$awayTeamGoal=$response->api->fixtures[$i]->goalsAwayTeam;
-									if($_SESSION["teamId"]==$homeTeamId || $_SESSION["teamId"]==$awayTeamId){
+							for($i=0; $i<count($response->response);$i++){
+									$id=$response->response[$i]->fixture->id;
+									$date= str_replace(" ", "<br>" ,date("d-m-Y H:i", strtotime($response->response[$i]->fixture->date)));
+									$status=$response->response[$i]->fixture->status->long;
+									$elapsed=$response->response[$i]->fixture->status->elapsed;
+									$homeTeamId=$response->response[$i]->fixture->teams->home->id;
+									$homeTeam=$response->response[$i]->teams->home->name;
+									$homeTeamLogo=$response->response[$i]->teams->home->logo;
+									$homeTeamGoal=$response->response[$i]->goals->home;
+									$awayTeamId=$response->response[$i]->teams->away->id;
+									$awayTeam=$response->response[$i]->teams->away->name;
+									$awayTeamLogo=$response->response[$i]->teams->away->logo;
+									$awayTeamGoal=$response->response[$i]->goals->away;
+									if($_SESSION["teamId"]!=null && ($_SESSION["teamId"]==$homeTeamId || $_SESSION["teamId"]==$awayTeamId)){
 										if($status=="Match Finished"||$status=="Not Started"||$status=="Time to be defined"||$status=="Match Postponed")
 											echo "<tr class='matches' style='background-color:#3273dc; color:white;'><td><img style='width:50px' src='$homeTeamLogo' alt='team-logo' loading='lazy'></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$homeTeamId&action=article' style='color:white;'>$homeTeam</a></h1></td><td>$date<br>$status<br><h1 class=\"title is-5\" style='color:white'>$homeTeamGoal-$awayTeamGoal</h1><a href='./match.php?id=$id' style='color:white'>Details</a></td><td><h1 class=\"title is-5\"><a href='./team.php?id=$awayTeamId&action=article' style='color:white;'>$awayTeam</a></h1></td><td><img style='width:50px' src='$awayTeamLogo' alt='team-logo' loading='lazy'></td></tr>";
 										else
@@ -176,7 +176,7 @@ require_once("function.php");
 						$response_data=json_decode($row["response"]);
 					}
 					else{
-						$response_data = request("https://api-football-v1.p.rapidapi.com/v2/topscorers/2857?timezone=Europe%2FRome");
+						$response_data = request("https://api-football-v1.p.rapidapi.com/v3/players/topscorers?league=135&season=2025");
 						$timestamp= date('Y-m-d H:i:s');
 						$stmt = $db->prepare("INSERT INTO topscorer(timestamp,response) VALUES (?,?)");
 						$stmt->execute([$timestamp,json_encode($response_data)]);
@@ -184,13 +184,13 @@ require_once("function.php");
 					echo "<h1 class=\"title is-2\" style='text-align:center'>Top scorer</h1>";
 					echo"<div class='table-container'><table class=\"table\">";
 					echo "<tr><th>Player</th><th>Goal</th><th>Total shot</th><th>Shot on goal</th><th>Assist</th><th>Appearances</th></tr>";
-					for($i=0; $i<count($response_data->api->topscorers); $i++){
-						$name=$response_data->api->topscorers[$i]->player_name;
-						$played=$response_data->api->topscorers[$i]->games->appearences;
-						$goal=$response_data->api->topscorers[$i]->goals->total;
-						$assist=$response_data->api->topscorers[$i]->goals->assists;
-            $shotOnGoal=$response_data->api->topscorers[$i]->shots->on;
-            $total=$response_data->api->topscorers[$i]->shots->total;
+					for($i=0; $i<count($response_data->response); $i++){
+						$name=$response_data->response[$i]->player->name;
+						$played=$response_data->response[$i]->statistics[0]->games->appearences;
+						$goal=$response_data->response[$i]->statistics[0]->goals->total;
+						$assist=$response_data->response[$i]->statistics[0]->goals->assists;
+            $shotOnGoal=$response_data->response[$i]->statistics[0]->shots->on;
+            $total=$response_data->response[$i]->statistics[0]->shots->total;
 						echo "<tr><td><b>$name</b></td><td>$goal</td><td>$total</td><td>$shotOnGoal</td><td>$assist</td><td>$played</td></tr>";
 					}
 					echo"</table></div>";

@@ -14,7 +14,7 @@ $name=$update["message"]["from"]["first_name"];
 $surname=$update["message"]["from"]["last_name"];
 $username=$update["message"]["from"]["username"];
 if ($message=="/start") {
-sendMessage($id,"Here you can receive real-time notifications from your team, if you want to enable this function go to https://blogyouropinion.ddns.net/edit.php?action=show, copy the token and paste it after /set");
+sendMessage($id,"Here you can receive real-time notifications from your team, if you want to enable this function go to https://".$_SERVER['SERVER_NAME']."/blogyouropinion/edit.php?action=show, copy the token and paste it after /set");
 }
 else if(substr($message, 0, 4)=="/set"){
   $token=substr($message, 5, strlen($message));
@@ -36,6 +36,7 @@ else if(substr($message, 0, 4)=="/set"){
           if ($stmt->rowCount() == 0) {
             $stmt = $db->prepare("UPDATE user SET telegramId = ? WHERE id=?");
             $r = $stmt->execute([$id,$tokenid]);
+
             sendMessage($id,"Newsletter set");
           }
           else{

@@ -1,0 +1,12 @@
+php_flag engine off
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+# 3. Blocca l'accesso diretto ai file immagine (la tua richiesta originale)
+<IfModule mod_authz_core>
+    <FilesMatch "\.(webp|jpg|jpeg|png)$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+
