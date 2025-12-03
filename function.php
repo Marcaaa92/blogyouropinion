@@ -46,8 +46,6 @@ function request($link)
     if ($curl_error) {
         error_log("ERRORE cURL: " . $curl_error);
     }
-    error_log("Codice HTTP ricevuto: " . $http_code);
-    error_log("Risposta API non decodificata: " . $response_exec); 
 
     if ($response_exec === false || empty($response_exec)) {
         return null;
@@ -139,7 +137,6 @@ function sendPhoto($id, $photo, $caption) {
     // 2. Costruisci l'URL della foto
     // ATTENZIONE: Se il tuo sito non usa HTTPS, la chiamata fallirà.
     $photo_url = "https://" . $_SERVER['SERVER_NAME'] . "/blogyouropinion/" . $photo;
-	error_log($photo_url);
     // 3. Dati da inviare al server Telegram in POST
     $data = [
         'chat_id' => $id,
